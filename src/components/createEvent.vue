@@ -258,7 +258,13 @@ export default{
         this.event.fields.push({
           url : "",
           description : ""
-        });
+        })
+    },
+
+    //onEventCreate
+    eventCreated(){
+      this.showPreloader = false
+      this.$router.push('/success')
     },
 
     //removeElement
@@ -303,20 +309,24 @@ export default{
         this.showPreloader = true
 
         this.$store.state.db.db.ref('events/').push(event)
+        .then(function(snapshot){
 
-        for(let i in this.photos){
-          this.$store.state.db.storage.ref('eventPhotos/'+
-            this.photos[i].photoUrl.slice(this.photos[i].photoUrl.lastIndexOf('/')+1))
-          .put(this.photos[i].photoObj)
-          .then(function(snapshot){
-            vm.showPreloader = false
-            vm.$router.push('/success')
-          })
 
-          //console.log(this.photos[i].photoUrl.slice(this.photos[i].photoUrl.lastIndexOf('/')+1))
+          //if no photo uploaded
+          if(vm.event.photoUrl.length == 0){
+            vm.eventCreated()
+          }else{
 
-        }
-
+            for(let i in vm.photos){
+              vm.$store.state.db.storage.ref('eventPhotos/'+
+                vm.photos[i].photoUrl.slice(vm.photos[i].photoUrl.lastIndexOf('/')+1))
+              .put(vm.photos[i].photoObj)
+              .then(function(snapshot){
+                  vm.eventCreated()
+              })
+            }
+          }
+        })
       }//if ends
       else{
         //toast

@@ -3,7 +3,7 @@
 
     <v-form >
       <v-layout row wrap justify-space-around>
-        <v-flex xs12 md4 lg4 >
+        <v-flex xs12 md10 lg10 >
           <v-text-field
             label="Title"
             v-model="event.title"
@@ -14,7 +14,10 @@
           <span class="junk">j</span>
         </v-flex>
 
+      </v-layout>
 
+
+      <v-layout row wrap justify-space-around>
         <v-flex xs12 md4 lg4>
           <v-text-field
             label="Venue"
@@ -22,6 +25,18 @@
           ></v-text-field>
           <span v-if="event.venue.length == 0" class="text-field-required-warning">
             You have not entered Venue for the event !
+          </span>
+          <span class="junk">j</span>
+        </v-flex>
+
+
+        <v-flex xs12 md4 lg4>
+          <v-text-field
+            label="Category"
+            v-model="event.category"
+          ></v-text-field>
+          <span v-if="event.category.length == 0" class="text-field-required-warning">
+            You have not entered Category of the event !
           </span>
           <span class="junk">j</span>
         </v-flex>
@@ -160,6 +175,18 @@
 
       <br>
 
+      <v-btn @click="addField()">add more links</v-btn>
+
+      <tr v-for="(field, index) in event.fields">
+        <td><input type="text" v-model="field.url"></td>
+        <td><input type="text" v-model="field.description"></td>
+        <td>
+        <a @click="removeField(index);">Remove</a>
+        </td>
+      </tr>
+
+      <br>
+
       <v-layout row wrap justify-space-around>
 
         <v-flex xs12 md10 lg10>
@@ -170,6 +197,8 @@
 
     </v-form>
 
+
+    <div v-show="showPreloader">submiting ...</div>
 
 
   </div>
@@ -183,10 +212,14 @@ export default{
   //
   data(){
     return {
+
+      showPreloader : false,
+
       //input value
       event : {
         title : '',
         venue : '',
+        category:'',
         description : '',
 
         //date
@@ -203,9 +236,11 @@ export default{
         newspaperLink:'',
         webLink:'',
 
-      },
-      photos:[]
+        fields : [],
+        photoUrl : []
 
+      },
+      photos:[],
     }
   },
 
@@ -216,6 +251,20 @@ export default{
 
   //methods
   methods:{
+
+    //addField
+    addField() {
+        //var elem = document.createElement('tr');
+        this.event.fields.push({
+          url : "",
+          description : ""
+        });
+    },
+
+    //removeElement
+    removeField(index) {
+        this.event.fields.splice(index, 1);
+    },
 
     //uploadFile
     uploadFile(event){
@@ -228,6 +277,9 @@ export default{
 
       this.photos.push(tempPhotoObj)
 
+      this.event.photoUrl.push(tempPhotoObj.photoUrl.slice(tempPhotoObj.photoUrl.lastIndexOf('/')+1))
+      //console.log(this.event.photoUrl)
+
     },
 
     //removePhoto
@@ -235,27 +287,39 @@ export default{
       //console.log(index)
       //delete
       this.photos.splice(index,1)
+      this.event.photoUrl.splice(index,1)
     },
 
     //createEvent
     createEvent(event){
+
+      let vm = this
 
       if(this.event.title.length != 0 &&
         this.event.venue.length != 0 &&
           this.event.date.length != 0 &&
             this.event.time.length != 0){
 
+        this.showPreloader = true
+
         this.$store.state.db.db.ref('events/').push(event)
 
         for(let i in this.photos){
           this.$store.state.db.storage.ref('eventPhotos/'+
-            this.photos[i].photoObj.name)
+            this.photos[i].photoUrl.slice(this.photos[i].photoUrl.lastIndexOf('/')+1))
           .put(this.photos[i].photoObj)
-          .then(function(snapshot) {
-            console.log('Uploaded a blob or file!');
-          });
+          .then(function(snapshot){
+            vm.showPreloader = false
+            vm.$router.push('/success')
+          })
+
+          //console.log(this.photos[i].photoUrl.slice(this.photos[i].photoUrl.lastIndexOf('/')+1))
+
         }
 
+      }//if ends
+      else{
+        //toast
       }
     }
   },

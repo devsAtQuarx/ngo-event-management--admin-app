@@ -41,6 +41,9 @@ export default {
 </script>
 
 <style>
+#app{
+  background: #fff;
+}
 .input-group__details {
     padding-top: 0px;
     min-height: 1px;

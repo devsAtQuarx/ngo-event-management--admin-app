@@ -21,7 +21,10 @@ new Vue({
 
     //auth Change Check
     const firebaseApp = firebase.initializeApp(config)
-    store.state.auth.db = firebaseApp.database()
+
+    //db
+    store.state.db.db = firebaseApp.database()
+    store.state.db.storage = firebase.storage()
 
     firebase.auth().onAuthStateChanged((user) => {
       if(user) {

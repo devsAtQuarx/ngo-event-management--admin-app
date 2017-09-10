@@ -1,7 +1,6 @@
 const state = {
   user : {},
-  isLoggedIn : false,
-  db : {}
+  isLoggedIn : false
 }
 
 const getters = {
@@ -10,9 +9,6 @@ const getters = {
   },
   isLoggedIn : state => {
     return state.isLoggedIn
-  },
-  firebaseApp : state => {
-    return state.firebaseApp
   }
 }
 

@@ -45,4 +45,7 @@ export default {
     padding-top: 0px;
     min-height: 1px;
 }
+.application--light .input-group.input-group--textarea:not(.input-group--full-width) .input-group__input{
+  border: 1px solid rgba(0,0,0,.38);
+}
 </style>

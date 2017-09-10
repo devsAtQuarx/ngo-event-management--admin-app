@@ -4,6 +4,7 @@ import Auth from '@/components/Auth'
 import AuthSuccess from '@/components/AuthSuccess'
 import createEvent from '@/components/createEvent'
 import events from '@/components/events'
+import specEvent from '@/components/specEvent'
 
 Vue.use(Router)
 
@@ -27,6 +28,10 @@ export default new Router({
           component : createEvent
         }
       ]
+    },
+    {
+      path:'/specEvent/:id',
+      component: specEvent
     }
   ]
 })

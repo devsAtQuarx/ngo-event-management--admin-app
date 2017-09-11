@@ -5,8 +5,10 @@
       <v-icon dark>add</v-icon>
     </v-btn>
 
-    <li v-for="(event,i) in eventsArr" @click="goToSpecEvent(event, i)">
+    <li v-for="(event,i) in eventsArr">
       {{event}}
+      <button @click="goToSpecEvent(event, i)">View | Delete</button>
+      <v-btn @click="goToTrackEvent(event,i)">track event</v-btn>
     </li>
 
     <button @click="loadMoreEvents()">
@@ -25,11 +27,13 @@ export default{
   methods:{
 
 
+    //goToTrackEvent
+    goToTrackEvent(event, i){
+      this.$router.push('/trackEvent/'+event.key)
+    },
+
     //goToSpecEvent
     goToSpecEvent(event, i){
-      this.$store.state.events.specEvent = event
-      this.$store.state.events.specEvent.index = i
-      //console.log(this.$store.state.events.specEvent)
       this.$router.push('/specEvent/'+event.key)
     },
 

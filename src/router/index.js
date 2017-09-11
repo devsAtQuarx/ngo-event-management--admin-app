@@ -5,6 +5,8 @@ import AuthSuccess from '@/components/AuthSuccess'
 import createEvent from '@/components/createEvent'
 import events from '@/components/events'
 import specEvent from '@/components/specEvent'
+import trackEvent from '@/components/trackEvent'
+
 
 Vue.use(Router)
 
@@ -30,7 +32,11 @@ export default new Router({
         {
           path:'/specEvent/:id',
           component: specEvent
-        }
+        },
+        {
+          path:'/trackEvent/:id',
+          component: trackEvent
+        },
       ]
     }
   ]

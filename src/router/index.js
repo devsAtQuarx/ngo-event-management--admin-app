@@ -26,12 +26,12 @@ export default new Router({
         {
           path:'createEvent',
           component : createEvent
+        },
+        {
+          path:'/specEvent/:id',
+          component: specEvent
         }
       ]
-    },
-    {
-      path:'/specEvent/:id',
-      component: specEvent
     }
   ]
 })

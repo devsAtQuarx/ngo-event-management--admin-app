@@ -29,13 +29,14 @@
 
        </v-flex>
      </v-layout >
-    
+
 
     <li v-for="(event,i) in eventsArr">
       {{event}}
       <button @click="goToSpecEvent(event, i)">View | Delete</button>
       <v-btn @click="goToTrackEvent(event,i)">track event</v-btn>
- 
+      <v-btn @click="goToFeedback(event,i)">feedback</v-btn>
+    </li>
 
     <button @click="loadMoreEvents()">
       load more events ...
@@ -52,6 +53,11 @@ export default{
   //methods
   methods:{
 
+
+    //goToFeedback
+    goToFeedback(event, i){
+      this.$router.push('/feedback/'+event.key)
+    },
 
     //goToTrackEvent
     goToTrackEvent(event, i){

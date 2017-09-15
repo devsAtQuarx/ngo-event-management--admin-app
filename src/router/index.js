@@ -6,6 +6,7 @@ import createEvent from '@/components/createEvent'
 import events from '@/components/events'
 import specEvent from '@/components/specEvent'
 import trackEvent from '@/components/trackEvent'
+import feedback from '@/components/feedback'
 
 
 Vue.use(Router)
@@ -37,6 +38,10 @@ export default new Router({
           path:'/trackEvent/:id',
           component: trackEvent
         },
+        {
+          path:'/feedback/:id',
+          component : feedback
+        }
       ]
     }
   ]

@@ -7,9 +7,10 @@
       light
       enable-resize-watcher
       overflow
+      class="grey lighten-4"
 
     >
-      <v-list dense>
+      <v-list dense class="grey lighten-4">
 
         <v-list-tile @click="">
           <v-list-tile-action>
@@ -43,7 +44,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar class="indigo" dark fixed>
+    <v-toolbar style="background:#1976d2" dark fixed>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Toolbar</v-toolbar-title>
     </v-toolbar>

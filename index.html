@@ -24,7 +24,9 @@
         for (var file of chunk.files) {
           if (file.match(/\.(js|css)$/)) { %>
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
+
   </head>
+  <script src="https://use.fontawesome.com/4ca7022222.js"></script>
   <body>
     <noscript>
       This is your fallback content in case JavaScript fails to load.

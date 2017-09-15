@@ -42,7 +42,7 @@ export default {
 
 <style>
 #app{
-  background: #fff;
+  background: #f5f5f5;
 }
 .input-group__details {
     padding-top: 0px;

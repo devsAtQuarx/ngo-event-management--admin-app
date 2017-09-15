@@ -451,6 +451,8 @@ export default{
         this.$store.state.db.db.ref('events/').push(event)
         .then(function(snapshot){
 
+          vm.$store.state.events.newEventAdded = true  // added new*
+          //console.log(vm.$store.state.events.createEvent)
 
           //if no photo uploaded
           if(vm.event.photoUrl.length == 0){

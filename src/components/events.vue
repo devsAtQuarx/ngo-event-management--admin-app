@@ -5,25 +5,50 @@
       <v-icon dark>add</v-icon>
     </v-btn>
     <v-layout row wrap justify-space-around >
-    <v-flex xs12 md10 lg10 v-for="(event,i) in eventsArr" class="primary ma-3">
-         <v-card class="white grey--text">
+    <v-flex xs12 md10 lg10 v-for="(event,i) in eventsArr" class="primary ma-1 elevation-2">
+         <v-card class="blue-grey darken-4 white--text" @click="goToSpecEvent(event, i)">
            <v-container fluid grid-list-lg>
              <v-layout row>
                <v-flex xs7>
                  <div>
                    <div class="headline">{{event.title}}</div>
-                   <div>Ellie Goulding</div>
+                   <v-icon class="white--text icon_font">location_on</v-icon>
+                   <span>{{event.venue}}</span>
+
+
                  </div>
+                 <br>
+
+                 <div >
+                   <v-icon class="white--text icon_font" >date_range</v-icon>
+                   <span>{{event.date}}</span>
+                   <v-spacer></v-spacer>
+                   <v-icon class="white--text icon_font">access_time</v-icon>
+                   <span>{{event.time}}</span>
+
+                 </div>
+
                </v-flex>
                <v-flex xs5>
                   <v-card-media
-                     src="/static/img/icons/apple-touch-icon.png"
+                     src="/static/img/icons/umangFoundation.jpg"
                      height="125px"
                      contain
+                     v-if="event.photoUrl ==null"
                    ></v-card-media>
+
+                   <v-card-media
+                      :src="event.photoUrl[0]"
+                      height="125px"
+                      contain
+                      v-else
+                    ></v-card-media>
+                   <!--button >View | Delete</button>
+                   <v-btn @click="goToTrackEvent(event,i)">track event</v-btn-->
                </v-flex>
              </v-layout>
            </v-container>
+
          </v-card>
 
 
@@ -31,13 +56,12 @@
      </v-layout >
 
 
-    <li v-for="(event,i) in eventsArr">
-      {{event}}
-      <button @click="goToSpecEvent(event, i)">View | Delete</button>
-      <v-btn @click="goToTrackEvent(event,i)">track event</v-btn>
+
+    
       <v-btn @click="goToFeedback(event,i)">feedback</v-btn>
       <v-btn @click="goToQrCode(event,i)">QR code</v-btn>
     </li>
+
 
     <button @click="loadMoreEvents()">
       load more events ...
@@ -197,5 +221,9 @@ export default{
   position:fixed;
   right: 20px;
   bottom :20px;
+  z-index: 2;
+}
+.icon_font{
+  font-size:19px
 }
 </style>

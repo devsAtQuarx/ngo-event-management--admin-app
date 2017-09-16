@@ -1,20 +1,24 @@
-[debug] [2017-09-16T08:36:49.853Z] ----------------------------------------------------------------------
-[debug] [2017-09-16T08:36:49.856Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
-[debug] [2017-09-16T08:36:49.856Z] CLI Version:   3.11.0
-[debug] [2017-09-16T08:36:49.856Z] Platform:      darwin
-[debug] [2017-09-16T08:36:49.856Z] Node Version:  v6.11.3
-[debug] [2017-09-16T08:36:49.857Z] Time:          Sat Sep 16 2017 14:06:49 GMT+0530 (IST)
-[debug] [2017-09-16T08:36:49.857Z] ----------------------------------------------------------------------
+[debug] [2017-09-16T18:15:43.230Z] ----------------------------------------------------------------------
+[debug] [2017-09-16T18:15:43.236Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2017-09-16T18:15:43.237Z] CLI Version:   3.11.0
+[debug] [2017-09-16T18:15:43.237Z] Platform:      darwin
+[debug] [2017-09-16T18:15:43.237Z] Node Version:  v6.11.3
+[debug] [2017-09-16T18:15:43.239Z] Time:          Sat Sep 16 2017 23:45:43 GMT+0530 (IST)
+[debug] [2017-09-16T18:15:43.239Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2017-09-16T08:36:49.885Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2017-09-16T08:36:49.886Z] > authorizing via signed-in user
-[debug] [2017-09-16T08:36:49.888Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2017-09-16T08:36:49.889Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/y4T2TJgbOtdD-2fWwxWPNBPSZE30cON552RWY7WkT4A',
+[debug] [2017-09-16T18:15:43.277Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-09-16T18:15:43.278Z] > authorizing via signed-in user
+[debug] [2017-09-16T18:15:43.282Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-09-16T18:15:43.282Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/y4T2TJgbOtdD-2fWwxWPNBPSZE30cON552RWY7WkT4A',
   client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
   client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
   grant_type: 'refresh_token',
   scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
- Sat Sep 16 2017 14:06:49 GMT+0530 (IST)
-[debug] [2017-09-16T08:36:50.254Z] <<< HTTP RESPONSE 200
-[debug] [2017-09-16T08:36:50.277Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/umangfoundation-admin  
- Sat Sep 16 2017 14:06:50 GMT+0530 (IST)
+ Sat Sep 16 2017 23:45:43 GMT+0530 (IST)
+[debug] [2017-09-16T18:15:44.578Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-16T18:15:44.594Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/umangfoundation-admin  
+ Sat Sep 16 2017 23:45:44 GMT+0530 (IST)
+[debug] [2017-09-16T18:15:46.621Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-16T18:15:46.622Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/umangfoundation-admin/tokens  
+ Sat Sep 16 2017 23:45:46 GMT+0530 (IST)
+[debug] [2017-09-16T18:15:47.766Z] <<< HTTP RESPONSE 200

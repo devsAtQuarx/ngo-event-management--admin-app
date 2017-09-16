@@ -56,11 +56,11 @@
      </v-layout >
 
 
-    <!--li v-for="(event,i) in eventsArr">
-      {{event}}
 
+    
+      <v-btn @click="goToFeedback(event,i)">feedback</v-btn>
+   
 
-</li-->
     <button @click="loadMoreEvents()">
       load more events ...
     </button>
@@ -76,6 +76,11 @@ export default{
   //methods
   methods:{
 
+
+    //goToFeedback
+    goToFeedback(event, i){
+      this.$router.push('/feedback/'+event.key)
+    },
 
     //goToTrackEvent
     goToTrackEvent(event, i){

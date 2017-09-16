@@ -464,10 +464,14 @@ export default{
               vm.$store.state.db.storage.ref('eventPhotos/'+
                 vm.photos[i].photoUrl.slice(vm.photos[i].photoUrl.lastIndexOf('/')+1))
               .put(vm.photos[i].photoObj)
+              .once('value',function(snapshot){
+                console.log(snapshot.val())
+              })
               .then(function(snapshot){
-                  vm.eventCreated()
+                //vm.eventCreated()
               })
             }
+
           }
         })
       }//if ends

@@ -59,7 +59,9 @@
 
     
       <v-btn @click="goToFeedback(event,i)">feedback</v-btn>
-   
+      <v-btn @click="goToQrCode(event,i)">QR code</v-btn>
+    </li>
+
 
     <button @click="loadMoreEvents()">
       load more events ...
@@ -76,6 +78,9 @@ export default{
   //methods
   methods:{
 
+    goToQrCode(event,i){
+      this.$router.push('/qrcode/'+event.key)
+    },
 
     //goToFeedback
     goToFeedback(event, i){

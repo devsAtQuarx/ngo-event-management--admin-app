@@ -41,7 +41,7 @@ export default{
       }
       //console.log(tempFeedbackArr)
       tempFeedbackArr.reverse()
-      console.log(tempFeedbackArr)
+      //console.log(tempFeedbackArr)
       if(this.feedbacks.length == 0){
         this.feedbacks = tempFeedbackArr
       }else{
@@ -65,7 +65,7 @@ export default{
       this.feedbackCount += 2
       //console.log(this.feedbackCount)
       //console.log(vm.feedbacks)
-      console.log(vm.feedbacks[this.feedbackCount])
+      //console.log(vm.feedbacks[this.feedbackCount])
       if(vm.feedbacks[this.feedbackCount]
           != undefined ){
         this.$store.state.db.db.ref('feedbackAdmin/' + this.$route.params.id)
@@ -73,7 +73,7 @@ export default{
         .endAt(vm.feedbacks[this.feedbackCount].key)
         .limitToLast(3)
         .once('value',function(snapshot){
-          console.log(snapshot.val())
+          //console.log(snapshot.val())
           //
           vm.showFeedbacksOnDom(snapshot.val())
         })

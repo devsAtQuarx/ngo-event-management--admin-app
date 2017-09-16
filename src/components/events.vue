@@ -36,6 +36,7 @@
       <button @click="goToSpecEvent(event, i)">View | Delete</button>
       <v-btn @click="goToTrackEvent(event,i)">track event</v-btn>
       <v-btn @click="goToFeedback(event,i)">feedback</v-btn>
+      <v-btn @click="goToQrCode(event,i)">QR code</v-btn>
     </li>
 
     <button @click="loadMoreEvents()">
@@ -53,6 +54,9 @@ export default{
   //methods
   methods:{
 
+    goToQrCode(event,i){
+      this.$router.push('/qrcode/'+event.key)
+    },
 
     //goToFeedback
     goToFeedback(event, i){

@@ -7,6 +7,7 @@ import events from '@/components/events'
 import specEvent from '@/components/specEvent'
 import trackEvent from '@/components/trackEvent'
 import feedback from '@/components/feedback'
+import qrcode from '@/components/qrcode'
 
 
 Vue.use(Router)
@@ -41,6 +42,10 @@ export default new Router({
         {
           path:'/feedback/:id',
           component : feedback
+        },
+        {
+          path:'/qrcode/:id',
+          component : qrcode
         }
       ]
     }

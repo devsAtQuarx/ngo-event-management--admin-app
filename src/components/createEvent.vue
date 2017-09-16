@@ -253,12 +253,12 @@
       </v-layout>
       <v-layout row wrap id="choose_file_input">
 
-        <v-text-field
+        <input
         class="hide_file"
         type="file"
          id="choose_image"
          @change="uploadFile($event)">
-      </v-text-field>
+      >
       <span id="file_upload_icon"><v-icon>file_upload</v-icon></span>
 
       </v-layout>
@@ -377,7 +377,8 @@ export default{
         webLink:'',
 
         fields : [],
-        photoUrl : []
+        photoUrl : [],
+        downloadUrl : []
 
       },
       photos:[],
@@ -414,6 +415,7 @@ export default{
 
     //uploadFile
     uploadFile(event){
+      //console.log(event)
       //console.log(this.photos)
       //console.log(URL.createObjectURL(event.target.files[0]))
       let tempPhotoObj = {
@@ -438,7 +440,7 @@ export default{
 
     //createEvent
     createEvent(event){
-
+      //console.log(event)
       let vm = this
 
       if(this.event.title.length != 0 &&
@@ -448,37 +450,52 @@ export default{
 
         this.showPreloader = true
 
-        this.$store.state.db.db.ref('events/').push(event)
-        .then(function(snapshot){
+        let c = 0
 
-          vm.$store.state.events.newEventAdded = true  // added new*
-          //console.log(vm.$store.state.events.createEvent)
+        //if no photo uploaded
+        if(vm.event.photoUrl.length == 0){
+          vm.saveInDb(event)
+        }else{
 
-          //if no photo uploaded
-          if(vm.event.photoUrl.length == 0){
-            vm.eventCreated()
-          }else{
-
-            for(let i in vm.photos){
-              
-              vm.$store.state.db.storage.ref('eventPhotos/'+
-                vm.photos[i].photoUrl.slice(vm.photos[i].photoUrl.lastIndexOf('/')+1))
+          for(let i in vm.photos){
+            c++
+            let uploadTask = vm.$store.state.db.storage.ref('eventPhotos/'+
+              vm.photos[i].photoUrl.slice(vm.photos[i].photoUrl.lastIndexOf('/')+1))
               .put(vm.photos[i].photoObj)
-              .once('value',function(snapshot){
-                console.log(snapshot.val())
-              })
-              .then(function(snapshot){
-                //vm.eventCreated()
-              })
-            }
+
+            uploadTask.on('state_changed', function(snapshot) {
+
+            }, function(error){
+
+            },function(){
+              console.log(uploadTask.snapshot.downloadURL)
+              event.downloadUrl.push(uploadTask.snapshot.downloadURL)
+              console.log(c + " " + vm.photos.length)
+              if(c == vm.photos.length)
+                vm.saveInDb(event)
+            })
 
           }
-        })
+
+        }
+
       }//if ends
       else{
         //toast
       }
+
+    },
+
+    saveInDb(event){
+      let vm = this
+      this.$store.state.db.db.ref('events/').push(event)
+      .then(function(snapshot){
+        vm.$store.state.events.newEventAdded = true  // added new*
+        //console.log(vm.$store.state.events.createEvent)
+        vm.eventCreated()
+      })
     }
+
   },
 
   //computed

@@ -460,6 +460,7 @@ export default{
           }else{
 
             for(let i in vm.photos){
+              
               vm.$store.state.db.storage.ref('eventPhotos/'+
                 vm.photos[i].photoUrl.slice(vm.photos[i].photoUrl.lastIndexOf('/')+1))
               .put(vm.photos[i].photoObj)

@@ -51,16 +51,11 @@
 
          </v-card>
 
+        <v-btn @click="goToFeedback(event,i)">feedback</v-btn>
+        <v-btn @click="goToQrCode(event,i)">QR code</v-btn>
 
        </v-flex>
      </v-layout >
-
-
-
-    
-      <v-btn @click="goToFeedback(event,i)">feedback</v-btn>
-      <v-btn @click="goToQrCode(event,i)">QR code</v-btn>
-    </li>
 
 
     <button @click="loadMoreEvents()">

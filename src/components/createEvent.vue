@@ -458,7 +458,7 @@ export default{
         }else{
 
           for(let i in vm.photos){
-            c++
+
             let uploadTask = vm.$store.state.db.storage.ref('eventPhotos/'+
               vm.photos[i].photoUrl.slice(vm.photos[i].photoUrl.lastIndexOf('/')+1))
               .put(vm.photos[i].photoObj)
@@ -471,6 +471,7 @@ export default{
               console.log(uploadTask.snapshot.downloadURL)
               event.downloadUrl.push(uploadTask.snapshot.downloadURL)
               console.log(c + " " + vm.photos.length)
+              c++
               if(c == vm.photos.length)
                 vm.saveInDb(event)
             })

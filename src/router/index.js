@@ -8,6 +8,7 @@ import specEvent from '@/components/specEvent'
 import trackEvent from '@/components/trackEvent'
 import feedback from '@/components/feedback'
 import qrcode from '@/components/qrcode'
+import manageRegisteredUsers from '@/components/manageRegisteredUsers'
 
 
 Vue.use(Router)
@@ -46,6 +47,10 @@ export default new Router({
         {
           path:'/qrcode/:id',
           component : qrcode
+        },
+        {
+          path:'/manageRegisteredUsers',
+          component: manageRegisteredUsers
         }
       ]
     }

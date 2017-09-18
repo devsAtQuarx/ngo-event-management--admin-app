@@ -471,7 +471,7 @@ export default{
               console.log(uploadTask.snapshot.downloadURL)
               event.downloadUrl.push(uploadTask.snapshot.downloadURL)
               console.log(c + " " + vm.photos.length)
-                c++
+              c++
               if(c == vm.photos.length)
                 vm.saveInDb(event)
             })

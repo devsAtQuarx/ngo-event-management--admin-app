@@ -41,6 +41,15 @@
           </v-list-tile-content>
         </v-list-tile>
 
+        <v-list-tile @click="manageRegisteredUsers()">
+          <v-list-tile-action>
+            <v-icon>home</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Manage Registered Users</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
       </v-list>
     </v-navigation-drawer>
 
@@ -78,6 +87,12 @@ export default {
 
   //
   methods: {
+
+    //
+    manageRegisteredUsers(){
+      this.$router.push('/manageRegisteredUsers')
+    },
+
     //logOut
     logOut() {
       firebase.auth().signOut();

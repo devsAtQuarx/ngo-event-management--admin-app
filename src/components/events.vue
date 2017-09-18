@@ -72,12 +72,11 @@
 
     </v-tabs>
 
+        <v-btn @click="goToFeedback(event,i)">feedback</v-btn>
+        <v-btn @click="goToQrCode(event,i)">QR code</v-btn>
 
        </v-flex>
      </v-layout >
-
-
-
 
       <infinite-loading
         v-if="eventsArr.length >= 3 && showLoader == true"

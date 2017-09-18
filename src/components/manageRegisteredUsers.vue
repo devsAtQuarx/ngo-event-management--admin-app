@@ -1,53 +1,124 @@
 <template>
   <div>
     manage registered users
-    <download-excel
-      class   = "btn btn-default"
-      :data   = "json_data"
-      :fields = "json_fields"
-      name    = "filename.xls">
 
-      Download Excel (you can customize this with html code!)
+    <v-btn @click="goToGenExcelSheetOfUsers">go to gen excel sheet of users</v-btn>
 
-    </download-excel>
+    <li
+      @click="goToSpecUserMemDetail(user)"
+      v-for="user in regUsers"
+    >
+      {{user}}
+    </li>
+
+    <v-btn @click="loadMore()">load More ...</v-btn>
+
   </div>
 </template>
 
 <script>
-  import JsonExcel from 'vue-json-excel'
+  import {mapGetters} from 'vuex'
 
   export default {
 
     data(){
       return{
-        json_fields : {
-          "name"      : "String",
-          "city"      : "String",
-          "country"   : "String",
-          "birthdate" : "String",
-          "amount"    : "Number"
-        },
-        json_data : [
-          {
-            "name"      : "Tony Peña",
-            "city"      : "New York",
-            "country"   : "United States",
-            "birthdate" : "1978-03-15",
-            "amount"    : 42
-          },
-          {
-            "name"      : "Thessaloniki",
-            "city"      : "Athens",
-            "country"   : "Greece",
-            "birthdate" : "1987-11-23",
-            "amount"    : 42
-          }
-        ]
+
       }
     },
 
-    components:{
-      'downloadExcel':JsonExcel
-    }
+    methods:{
+
+      goToSpecUserMemDetail(user){
+        this.$router.push('/specUserMemDetail/' + user.uid)
+      },
+
+      //showEvents
+      getRegUsers(){
+        let vm = this
+        this.$store.state.db.db.ref('userAuthDetail/').limitToLast(3)
+          .once('value',function(snapshot){
+            //console.log(snapshot.val())
+            vm.showRegUsersOnDom(snapshot.val())
+          })
+      },
+
+      //showEventsOnDom
+      showRegUsersOnDom(fetchedRegUsers){
+        console.log(fetchedRegUsers)
+        let tempRegUsersArr = []
+
+        for(let i in fetchedRegUsers){
+          fetchedRegUsers[i].key = i
+          tempRegUsersArr.push(fetchedRegUsers[i])
+        }
+        tempRegUsersArr.reverse()
+
+        if(this.$store.state.regUsers.regUsers.length == 0){
+          this.$store.state.regUsers.regUsers = tempRegUsersArr
+        }else{
+          for(let i in tempRegUsersArr){
+
+            if(tempRegUsersArr[i].key ==
+              this.$store.state.regUsers.regUsers[this.$store.state.regUsers.regUserCount].key){
+              //do nothing
+            }else{
+              this.$store.state.regUsers.regUsers.push(tempRegUsersArr[i])
+            }
+          }
+        }
+
+        //console.log(fetchedRegUsers)
+      },
+
+      loadMore(){
+        //console.log("loadMore")
+        let vm = this
+
+        this.$store.state.regUsers.regUserCount += 2
+        //console.log(this.$store.state.events.count)
+
+        if(vm.$store.state.regUsers.regUsers[this.$store.state.regUsers.regUserCount]
+          != undefined ){
+
+          this.$store.state.db.db.ref('userAuthDetail/')
+            .orderByKey()
+            .endAt(vm.$store.state.regUsers.regUsers[this.$store.state.regUsers.regUserCount].key)
+            .limitToLast(3)
+            .once('value',function(snapshot){
+              //console.log(snapshot.val())
+
+              //
+              vm.showRegUsersOnDom(snapshot.val())
+
+            })
+        }else{
+          // nothing to load more
+
+        }
+      },
+
+      goToGenExcelSheetOfUsers(){
+        this.$router.push('/genExcelSheetOfUsers')
+      }
+
+    },
+
+    beforeMount(){
+
+      if(this.$store.state.regUsers.regUsers.length == 0){
+        this.getRegUsers()
+      }else{
+        //console.log("else") dont load again
+      }
+
+    },
+
+    computed:{
+      ...mapGetters([
+        'regUsers'
+      ])
+    },
+
   }
 </script>

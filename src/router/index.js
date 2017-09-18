@@ -9,7 +9,8 @@ import trackEvent from '@/components/trackEvent'
 import feedback from '@/components/feedback'
 import qrcode from '@/components/qrcode'
 import manageRegisteredUsers from '@/components/manageRegisteredUsers'
-
+import specUserMemDetail from '@/components/specUserMemDetail'
+import genExcelSheetOfUsers from '@/components/genExcelSheetOfUsers'
 
 Vue.use(Router)
 
@@ -51,6 +52,14 @@ export default new Router({
         {
           path:'/manageRegisteredUsers',
           component: manageRegisteredUsers
+        },
+        {
+          path:'/specUserMemDetail/:id',
+          component:specUserMemDetail
+        },
+        {
+          path:'/genExcelSheetOfUsers',
+          component : genExcelSheetOfUsers
         }
       ]
     }

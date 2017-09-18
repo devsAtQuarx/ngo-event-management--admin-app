@@ -266,7 +266,7 @@
         <br>
         <br>
 
-        <v-layout row wrap justify-space-around style="float:left">
+        <v-layout row wrap justify-space-around style="float:left;background:">
         <span v-for="(photo,i) in photos"  >
         <!--  {{photo.photoObj.name}} -->
           <img :src="photo.photoUrl" id="uploaded_photo"style="height:200px;width:175px;" >
@@ -623,7 +623,7 @@ export default{
     width: 100%;
 }
 #file_upload_icon{
-  margin-left: 12.5px;
+  margin-left: 4px;
   margin-top: 12px;
 
 }

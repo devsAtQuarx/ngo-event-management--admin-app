@@ -53,7 +53,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar class="red accent-3" dark fixed>
+    <v-toolbar class="red accent-3" style="z-index:16" dark fixed>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Toolbar</v-toolbar-title>
     </v-toolbar>

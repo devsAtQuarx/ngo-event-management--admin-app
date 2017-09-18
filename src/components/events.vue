@@ -34,22 +34,43 @@
                      src="/static/img/icons/umangFoundation.jpg"
                      height="125px"
                      contain
-                     v-if="event.photoUrl ==null"
+                     v-if="event.downloadUrl ==undefined"
                    ></v-card-media>
 
                    <v-card-media
-                      :src="event.photoUrl[0]"
+                      :src="event.downloadUrl[0]"
                       height="125px"
                       contain
                       v-else
                     ></v-card-media>
-                   <!--button >View | Delete</button>
-                   <v-btn @click="goToTrackEvent(event,i)">track event</v-btn-->
+
+
                </v-flex>
              </v-layout>
            </v-container>
 
          </v-card>
+         <v-tabs dark grow>
+      <v-tabs-bar class="cyan">
+        <v-tabs-item>
+          <v-list-tile @click="goToTrackEvent(event,i)">
+            track
+          </v-list-tile>
+        </v-tabs-item>
+        <v-tabs-item>
+        <v-list-tile @click="goToFeedback(event,i)">
+          feedback
+        </v-list-tile>
+      </v-tabs-item>
+      <v-tabs-item>
+      <v-list-tile @click="goToQrCode(event,i)">
+        QR code
+      </v-list-tile>
+    </v-tabs-item>
+
+      </v-tabs-bar>
+
+    </v-tabs>
 
         <v-btn @click="goToFeedback(event,i)">feedback</v-btn>
         <v-btn @click="goToQrCode(event,i)">QR code</v-btn>
@@ -57,16 +78,20 @@
        </v-flex>
      </v-layout >
 
-
-    <button @click="loadMoreEvents()">
-      load more events ...
-    </button>
+      <infinite-loading
+        v-if="eventsArr.length >= 3 && showLoader == true"
+        :on-infinite="onInfinite"
+        ref="infiniteLoading"
+        class = "infiniteLoading"
+      >
+      </infinite-loading>
 
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import InfiniteLoading from 'vue-infinite-loading'
 
 export default{
 
@@ -159,12 +184,17 @@ export default{
 
           //
           vm.showEventsOnDom(snapshot.val())
+          vm.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded')
 
         })
       }else{
         // nothing to load more
+        this.$store.state.events.showLoader = false
       }
-    }
+    },
+    onInfinite() {
+       this.loadMoreEvents()
+   },
 
   },
 
@@ -205,9 +235,13 @@ export default{
 
   computed:{
     ...mapGetters([
-      'eventsArr'
+      'eventsArr',
+      'showLoader'
     ])
   },
+  components:{
+    InfiniteLoading
+  }
 }
 </script>
 

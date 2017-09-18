@@ -2,7 +2,8 @@ const state = {
   eventsArr : [],
   count : 0,
   newEventAdded : false,
-  eventDeleted : false
+  eventDeleted : false,
+  showLoader:true
 }
 
 const getters = {
@@ -14,6 +15,9 @@ const getters = {
   },
   newEventAdded : state => {
     return state.newEventAdded
+  },
+  showLoader : state => {
+    return state.showLoader
   }
 }
 

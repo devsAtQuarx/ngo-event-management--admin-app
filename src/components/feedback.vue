@@ -1,13 +1,27 @@
 <template>
   <div>
-    feedback {{$route.params.id}}
-    <li v-for="feedback in feedbacks">
-      {{feedback}}
-    </li>
-    <v-btn @click="loadMoreFeedbacks">loadMore</v-btn>
-  </div>
+   <v-layout row wrap justify-space-around>
+    <v-flex xs12 md10 lg10>
+      <div v-for="feedback in feedbacks" class="pt-2 pb-2">
+        <div class="feedback_uid">{{feedback.uid}}</div>
+        {{feedback.feedback}}
+        <v-divider></v-divider>
+      </div>
+    </v-flex>
+  </v-layout>
+  <infinite-loading
+    v-if="feedbacks.length >= 3 && showLoader == true"
+    :on-infinite="onInfinite"
+    ref="infiniteLoading"
+    class = "infiniteLoading"
+  >
+  </infinite-loading>
+</div>
+
 </template>
 <script>
+import {mapGetters} from 'vuex'
+import InfiniteLoading from 'vue-infinite-loading'
 export default{
 
   //data
@@ -76,16 +90,25 @@ export default{
           //console.log(snapshot.val())
           //
           vm.showFeedbacksOnDom(snapshot.val())
+          vm.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded')
         })
       }else{
         // nothing to load more
+        this.$store.state.events.showLoader = false
       }
-    }
+    },
+    onInfinite() {
+       this.loadMoreFeedbacks()
+   },
   },
 
-  //computed
   computed:{
-
+    ...mapGetters([
+      'showLoader'
+    ])
+  },
+  components:{
+    InfiniteLoading
   },
 
   //beforeMount
@@ -95,3 +118,9 @@ export default{
 
 }
 </script>
+<style>
+  .feedback_uid{
+    font-size: 12px;
+    font-weight: bold;
+  }
+</style>

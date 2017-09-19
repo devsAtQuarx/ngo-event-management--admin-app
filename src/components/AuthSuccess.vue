@@ -8,6 +8,7 @@
       enable-resize-watcher
       overflow
       class="grey lighten-4"
+      style="z-index:5"
 
     >
       <v-list dense class="grey lighten-4">
@@ -53,7 +54,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar class="red accent-3" style="z-index:16" dark fixed>
+    <v-toolbar class="red accent-3" style="z-index:4" dark fixed>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Toolbar</v-toolbar-title>
     </v-toolbar>

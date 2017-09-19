@@ -19,7 +19,7 @@
     methods:{
       getSpecUserDetail(){
         let vm = this
-        this.$store.state.db.db.ref('userAuthDetail/' + this.$route.params.id)
+        this.$store.state.db.db.ref('checkAuthDetail/' + vm.$route.params.id)
           .once('value',function (snapshot) {
             vm.userBasicDetail = snapshot.val()
 

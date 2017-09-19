@@ -260,8 +260,12 @@
          @change="uploadFile($event)">
       >
       <span id="file_upload_icon"><v-icon>file_upload</v-icon></span>
-
+      <br>
+      <br>
+      <br>
+      <span class="grey--text upload_image_text">Upload</span>
       </v-layout>
+
         <br>
         <br>
         <br>
@@ -648,7 +652,9 @@ border:2px solid grey;
 	0% { -webkit-transform:rotate(0deg); }
 	100% { -webkit-transform:rotate(360deg); }
 }
-
+.upload_image_text{
+      margin-top: -2vh;
+}
 
 
 </style>

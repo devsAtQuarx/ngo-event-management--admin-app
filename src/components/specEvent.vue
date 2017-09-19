@@ -68,45 +68,76 @@
         <a :href="specEventFromDb.facebookLink"
         v-if="specEventFromDb.facebookLink!=''">
         <v-icon
-          class="black--text display-1">
+          class=" display-1" style="color:#01579b">
           fa-facebook-official
         </v-icon>
       </a>
         <a :href="specEventFromDb.twitterLink"
         v-if="specEventFromDb.twitterLink!=''">
         <v-icon
-          class="black--text display-1">
+          class="cyan--text display-1">
           fa-twitter-square
         </v-icon>
         </a>
         <a :href="specEventFromDb.instagramLink"
         v-if="specEventFromDb.instagramLink!=''">
         <v-icon
-          class="black--text display-1">
+          class="purple--text display-1">
           fa-instagram
         </v-icon>
       </a>
       <a :href="specEventFromDb.youtubeLink"
         v-if="specEventFromDb.youtubeLink!=''">
         <v-icon
-          class="black--text display-1">
+          class="black--text display-1" style="color:#d50000!important;">
           fa-youtube-play
         </v-icon>
       </a>
       <a :href="specEventFromDb.newspaperLink"
         v-if="specEventFromDb.newspaperLink!=''">
         <v-icon
-          class="black--text display-1">
+          class="blue-grey--text display-1">
           fa-newspaper-o
         </v-icon>
       </a>
       <a :href="specEventFromDb.webLink"
         v-if="specEventFromDb.webLink!=''">
         <v-icon
-          class="black--text display-1">
+          class="blue--text display-1">
           fa-globe
         </v-icon>
       </a>
+      <v-menu
+     offset-x
+     :close-on-content-click="false"
+     :nudge-width="200"
+     v-if="specEventFromDb.fields !=undefined"
+
+     style="margin-left:-2vh"
+   >
+   <v-btn icon slot="activator" >
+     <v-icon>fa-caret-down</v-icon>
+   </v-btn>
+
+     <v-list style="height:fit-content">
+       <template v-for="field in specEventFromDb.fields">
+       <div class="grey--text">
+         <v-icon class="grey--text" style="margin-left:10px">fa-globe</v-icon>
+              <a :href="field.url" class="grey--text"><span style="font-weight:500;margin-left:4px">
+           {{field.url}}
+         </span></a>
+       </div>
+       <div class="grey--text">
+         <v-icon class="grey--text " style="margin-left:10px;font-size:15px">mode_edit</v-icon>
+         <span style="margin-left:4px;font-size:15px">
+           {{field.description}}
+         </span>
+       </div>
+       <v-divider></v-divider>
+     </template>
+     </v-list>
+
+   </v-menu>
       </div>
       <br>
       <br>
@@ -122,7 +153,7 @@
              fixed
              slot="activator"
               class="create-button"
-             ><v-icon class="white--text">delete</v-icon></v-btn>
+             ><v-icon class="white--text delete_icon">delete</v-icon></v-btn>
             <v-card>
               <v-card-title>
                 <div class=" grey--text darken-1" >Are you sure you want to delete this event?</div>
@@ -280,5 +311,8 @@ a {
 }
 #iconLinks{
       text-align: -webkit-center;
+}
+.delete_icon{
+  margin-top: 3px;
 }
 </style>

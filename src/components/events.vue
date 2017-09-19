@@ -4,9 +4,9 @@
     <v-btn fab dark class="teal fixed-floating-button" @click="goToCreateEvent">
       <v-icon dark>add</v-icon>
     </v-btn>
-    <v-layout row wrap justify-space-around >
+    <v-layout row wrap justify-space-around class="events_layout">
     <v-flex xs12 md10 lg10 v-for="(event,i) in eventsArr" class="primary ma-1 elevation-2">
-         <v-card class="blue-grey darken-4 white--text" @click="goToSpecEvent(event, i)">
+         <v-card class="blue-grey darken-4 white--text" @click="goToSpecEvent(event, i)" style="cursor: pointer;">
            <v-container fluid grid-list-lg>
              <v-layout row>
                <v-flex xs7>
@@ -50,30 +50,45 @@
            </v-container>
 
          </v-card>
-         <v-tabs dark grow>
-      <v-tabs-bar class="cyan">
-        <v-tabs-item>
-          <v-list-tile @click="goToTrackEvent(event,i)">
-            track
+         <v-tabs dark grow icons>
+      <v-tabs-bar class="cyan" style="height:55px">
+
+        <v-tabs-item style="filter: opacity(0.7);" class="pl-0 pr-0">
+          <v-list-tile  @click="goToTrackEvent(event,i)" class="pl-0 pr-0">
+            <v-icon class="icon_font">fa-user</v-icon>
           </v-list-tile>
+          <span style="font-size:10px;margin-top:-15px">track</span>
         </v-tabs-item>
-        <v-tabs-item>
-        <v-list-tile @click="goToFeedback(event,i)">
-          feedback
+
+
+        <v-tabs-item class="pl-0 pr-0">
+          <v-list-tile @click="goToFeedback(event,i)" class="pl-0 pr-0">
+            <v-icon class="icon_font">fa-pencil-square-o</v-icon>
+          </v-list-tile>
+          <span style="font-size:10px;margin-top:-15px">feedback</span>
+        </v-tabs-item>
+
+
+      <v-tabs-item class="pl-0 pr-0">
+        <v-list-tile @click="goToQrCode(event,i)" class="pl-0 pr-0">
+          <v-icon class="icon_font">fa-qrcode</v-icon>
         </v-list-tile>
+        <span style="font-size:10px;margin-top:-15px">QR code</span>
       </v-tabs-item>
-      <v-tabs-item>
-      <v-list-tile @click="goToQrCode(event,i)">
-        QR code
-      </v-list-tile>
-    </v-tabs-item>
+
+
+      <v-tabs-item class="pl-0 pr-0">
+        <v-list-tile  class="pl-0 pr-0">
+          <v-icon class="icon_font">fa-file-excel-o</v-icon>
+        </v-list-tile>
+        <span style="font-size:10px;margin-top:-15px">Manage</span>
+      </v-tabs-item>
 
       </v-tabs-bar>
 
     </v-tabs>
 
-        <v-btn @click="goToFeedback(event,i)">feedback</v-btn>
-        <v-btn @click="goToQrCode(event,i)">QR code</v-btn>
+
 
        </v-flex>
      </v-layout >
@@ -255,4 +270,9 @@ export default{
 .icon_font{
   font-size:19px
 }
+.events_layout{
+  margin-top: -4.9vh!important;
+
+}
+
 </style>

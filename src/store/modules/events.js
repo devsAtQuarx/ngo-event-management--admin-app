@@ -3,7 +3,9 @@ const state = {
   count : 0,
   newEventAdded : false,
   eventDeleted : false,
-  showLoader:true
+  showLoader:true,
+  feedbacks : [],
+  feedbackCount : 0
 }
 
 const getters = {
@@ -18,6 +20,12 @@ const getters = {
   },
   showLoader : state => {
     return state.showLoader
+  },
+  feedbacks : state => {
+    return state.feedbacks
+  },
+  feedbackCount  : state => {
+    return state.feedbackCount
   }
 }
 

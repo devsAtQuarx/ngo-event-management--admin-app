@@ -49,14 +49,8 @@
         let tempRegUsersArr = []
 
         for(let i in fetchedRegUsers){
-
-          let tmpObj = {
-            uid:i,
-            name : fetchedRegUsers[i]
-          }
-
-          //fetchedRegUsers[i].key = i
-          tempRegUsersArr.push(tmpObj)
+          fetchedRegUsers[i].key = i
+          tempRegUsersArr.push(fetchedRegUsers[i])
         }
         tempRegUsersArr.reverse()
 
@@ -65,8 +59,8 @@
         }else{
           for(let i in tempRegUsersArr){
 
-            if(tempRegUsersArr[i].uid ==
-              this.$store.state.regUsers.userRegInEvent[this.$store.state.regUsers.userRegInEventCount].uid){
+            if(tempRegUsersArr[i].key ==
+              this.$store.state.regUsers.userRegInEvent[this.$store.state.regUsers.userRegInEventCount].key){
               //do nothing
             }else{
               this.$store.state.regUsers.userRegInEvent.push(tempRegUsersArr[i])
@@ -89,7 +83,7 @@
 
           this.$store.state.db.db.ref('peopleInEvent/' + this.$route.params.id)
             .orderByKey()
-            .endAt(vm.$store.state.regUsers.userRegInEvent[this.$store.state.regUsers.userRegInEventCount].uid)
+            .endAt(vm.$store.state.regUsers.userRegInEvent[this.$store.state.regUsers.userRegInEventCount].key)
             .limitToLast(3)
             .once('value',function(snapshot){
               //console.log(snapshot.val())
@@ -119,7 +113,29 @@
       }
 
     },
-    
+
+    //updated
+    updated(){
+      let vm = this
+      this.$store.state.db.db.ref('peopleInEvent/' + this.$route.params.id)
+        .limitToLast(1)
+        .on('value',function(snapshot){
+          //console.log(Object.keys(snapshot.val())[0])
+          //console.log(vm.$store.state.events.eventsArr[0].key)
+          if(Object.keys(snapshot.val())[0] == vm.$store.state.regUsers.userRegInEvent[0].key){
+            //console.log("eq")
+            //do nothing
+          }else{
+            //console.log("not eq")
+            let newEvent = snapshot.val()
+            newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
+            vm.$store.state.regUsers.userRegInEvent.splice(0,0,newEvent[Object.keys(snapshot.val())[0]])
+            vm.$store.state.regUsers.userRegInEventCount += 1
+            //toast
+          }
+        })
+    },
+
 
     computed:{
       ...mapGetters([

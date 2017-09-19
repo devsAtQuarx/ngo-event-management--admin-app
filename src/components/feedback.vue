@@ -2,7 +2,7 @@
   <div>
    <v-layout row wrap justify-space-around>
     <v-flex xs12 md10 lg10>
-      <div v-for="feedback in feedbacks" class="pt-2 pb-2">
+      <div v-for="feedback in feedbacks" class="pt-2 pb-2" @click="goToSpecUserMemDetail(feedback.uid)">
         <div class="feedback_uid">{{feedback.uid}}</div>
         {{feedback.feedback}}
         <v-divider></v-divider>
@@ -27,13 +27,17 @@ export default{
   //data
   data(){
     return{
-      feedbacks : [],
-      feedbackCount : 0
+      //feedbacks : [],
+      //feedbackCount : 0
     }
   },
 
   //methods
   methods:{
+
+    goToSpecUserMemDetail(uid){
+      this.$router.push('/specUserMemDetail/' + uid)
+    },
 
     getFeedback(){
       //console.log("getFeedback")
@@ -56,16 +60,16 @@ export default{
       //console.log(tempFeedbackArr)
       tempFeedbackArr.reverse()
       //console.log(tempFeedbackArr)
-      if(this.feedbacks.length == 0){
-        this.feedbacks = tempFeedbackArr
+      if(this.$store.state.events.feedbacks.length == 0){
+        this.$store.state.events.feedbacks = tempFeedbackArr
       }else{
         for(let i in tempFeedbackArr){
-          //console.log(tempFeedbackArr[i].uid + " " + this.feedbacks[this.feedbackCount].uid)
+          //console.log(tempFeedbackArr[i].uid + " " + this.$store.state.events.feedbacks[this.$store.state.events.feedbackCount].uid)
           if(tempFeedbackArr[i].key ==
-            this.feedbacks[this.feedbackCount].key){
+            this.$store.state.events.feedbacks[this.$store.state.events.feedbackCount].key){
             //do nothing
           }else{
-            this.feedbacks.push(tempFeedbackArr[i])
+            this.$store.state.events.feedbacks.push(tempFeedbackArr[i])
           }
         }
       }
@@ -76,15 +80,15 @@ export default{
       //console.log("loadMore")
       //console.log("loadMore")
       let vm = this
-      this.feedbackCount += 2
-      //console.log(this.feedbackCount)
-      //console.log(vm.feedbacks)
-      //console.log(vm.feedbacks[this.feedbackCount])
-      if(vm.feedbacks[this.feedbackCount]
+      this.$store.state.events.feedbackCount += 2
+      //console.log(this.$store.state.events.feedbackCount)
+      //console.log(vm.$store.state.events.feedbacks)
+      //console.log(vm.$store.state.events.feedbacks[this.$store.state.events.feedbackCount])
+      if(vm.$store.state.events.feedbacks[this.$store.state.events.feedbackCount]
           != undefined ){
         this.$store.state.db.db.ref('feedbackAdmin/' + this.$route.params.id)
         .orderByKey()
-        .endAt(vm.feedbacks[this.feedbackCount].key)
+        .endAt(vm.$store.state.events.feedbacks[this.$store.state.events.feedbackCount].key)
         .limitToLast(3)
         .once('value',function(snapshot){
           //console.log(snapshot.val())
@@ -104,7 +108,7 @@ export default{
 
   computed:{
     ...mapGetters([
-      'showLoader'
+      'showLoader','feedbacks'
     ])
   },
   components:{
@@ -113,8 +117,34 @@ export default{
 
   //beforeMount
   beforeMount(){
-    this.getFeedback()
-  }
+    if(this.$store.state.events.feedbacks.length == 0){
+      this.getFeedback()
+    }else{
+      //console.log("else") dont load again
+    }
+  },
+
+  //updated
+  updated(){
+    let vm = this
+    this.$store.state.db.db.ref('feedbackAdmin/' + this.$route.params.id)
+      .limitToLast(1)
+      .on('value',function(snapshot){
+        //console.log(Object.keys(snapshot.val())[0])
+        //console.log(vm.$store.state.events.eventsArr[0].key)
+        if(Object.keys(snapshot.val())[0] == vm.$store.state.events.feedbacks[0].key){
+          //console.log("eq")
+          //do nothing
+        }else{
+          //console.log("not eq")
+          let newEvent = snapshot.val()
+          newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
+          vm.$store.state.events.feedbacks.splice(0,0,newEvent[Object.keys(snapshot.val())[0]])
+          vm.$store.state.events.feedbackCount += 1
+          //toast
+        }
+      })
+  },
 
 }
 </script>

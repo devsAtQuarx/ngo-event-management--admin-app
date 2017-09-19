@@ -1,15 +1,26 @@
 <template>
   <div>
-    qrcode {{$route.params.id}}
+
+  <!--  qrcode {{$route.params.id}} -->
     <!--qrcode value="Hello, World!" :options="qrPropObj"></qrcode-->
-    <qr-code
-      :text="text"
-      size="200"
-      color="#f1c40f"
-      bg-color="#3498db"
-      error-level="L">
-    </qr-code>
-  </div>
+
+  <v-layout justify-space-around style="height: -webkit-fill-available;display:flex;">
+
+
+        <qr-code
+          style="align-self:center"
+          :text="text"
+          size="200"
+          color="#f1c40f"
+          bg-color="#3498db"
+          error-level="L">
+        </qr-code>
+
+  </v-layout>
+
+
+
+</div>
 </template>
 
 <script>

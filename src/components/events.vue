@@ -53,15 +53,15 @@
          <v-tabs dark grow icons>
           <v-tabs-bar class="cyan" style="height:55px">
 
-                <v-tabs-item style="filter: opacity(0.7);" class="pl-0 pr-0">
+                <!--v-tabs-item style="filter: opacity(0.7);" class="pl-0 pr-0">
                   <v-list-tile  @click="goToTrackEvent(event,i)" class="pl-0 pr-0">
                     <v-icon class="icon_font">fa-user</v-icon>
                   </v-list-tile>
                   <span style="font-size:10px;margin-top:-15px">track</span>
-                </v-tabs-item>
+                </v-tabs-item-->
 
 
-                <v-tabs-item class="pl-0 pr-0">
+                <v-tabs-item style="filter: opacity(0.7);" class="pl-0 pr-0">
                   <v-list-tile @click="goToFeedback(event,i)" class="pl-0 pr-0">
                     <v-icon class="icon_font">fa-pencil-square-o</v-icon>
                   </v-list-tile>

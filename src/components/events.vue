@@ -110,6 +110,9 @@ export default{
   methods:{
 
     goToEventManagement(event){
+      //
+      this.$store.state.regUsers.userRegInEvent = []
+      this.$store.state.regUsers.userRegInEventCount = 0
       this.$router.push('/managePeopleInSpecEvent/'+event.key)
     },
 
@@ -119,7 +122,10 @@ export default{
 
     //goToFeedback
     goToFeedback(event, i){
-      this.$router.push('/feedback/'+event.key)
+        //
+        this.$store.state.events.feedbacks = []
+        this.$store.state.events.feedbackCount = 0
+        this.$router.push('/feedback/'+event.key)
     },
 
     //goToTrackEvent
@@ -213,7 +219,7 @@ export default{
   beforeMount(){
 
     if(this.$store.state.events.eventsArr.length == 0){
-      this.getEvents()
+      //this.getEvents()
     }else{
       console.log("else")
       console.log(this.$store.state.events.newEventAdded)

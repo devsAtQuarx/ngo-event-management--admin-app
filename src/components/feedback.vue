@@ -56,13 +56,16 @@ export default{
       for(let i in fetchedFeedbacks){
         fetchedFeedbacks[i].key = i
         tempFeedbackArr.push(fetchedFeedbacks[i])
+        console.log("1")
       }
       //console.log(tempFeedbackArr)
       tempFeedbackArr.reverse()
       //console.log(tempFeedbackArr)
       if(this.$store.state.events.feedbacks.length == 0){
         this.$store.state.events.feedbacks = tempFeedbackArr
+        console.log("2")
       }else{
+        console.log("3")
         for(let i in tempFeedbackArr){
           //console.log(tempFeedbackArr[i].uid + " " + this.$store.state.events.feedbacks[this.$store.state.events.feedbackCount].uid)
           if(tempFeedbackArr[i].key ==
@@ -130,18 +133,29 @@ export default{
     this.$store.state.db.db.ref('feedbackAdmin/' + this.$route.params.id)
       .limitToLast(1)
       .on('value',function(snapshot){
-        //console.log(Object.keys(snapshot.val())[0])
-        //console.log(vm.$store.state.events.eventsArr[0].key)
-        if(Object.keys(snapshot.val())[0] == vm.$store.state.events.feedbacks[0].key){
-          //console.log("eq")
-          //do nothing
-        }else{
-          //console.log("not eq")
-          let newEvent = snapshot.val()
-          newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
-          vm.$store.state.events.feedbacks.splice(0,0,newEvent[Object.keys(snapshot.val())[0]])
-          vm.$store.state.events.feedbackCount += 1
-          //toast
+        if(snapshot.val() != null) {
+          //console.log(Object.keys(snapshot.val())[0])
+          //console.log(vm.$store.state.events.eventsArr[0].key)
+          if(vm.$store.state.events.feedbacks.length != 0) {
+            if (Object.keys(snapshot.val())[0] == vm.$store.state.events.feedbacks[0].key) {
+              //console.log("eq")
+              //do nothing
+            } else {
+              //console.log("not eq")
+              let newEvent = snapshot.val()
+              newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
+              vm.$store.state.events.feedbacks.splice(0, 0, newEvent[Object.keys(snapshot.val())[0]])
+              vm.$store.state.events.feedbackCount += 1
+              //toast
+            }
+          }else{
+            //console.log("not eq")
+            let newEvent = snapshot.val()
+            newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
+            vm.$store.state.events.feedbacks.splice(0, 0, newEvent[Object.keys(snapshot.val())[0]])
+            vm.$store.state.events.feedbackCount += 1
+            //toast
+          }
         }
       })
   },

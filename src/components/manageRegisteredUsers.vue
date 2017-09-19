@@ -120,18 +120,29 @@
       this.$store.state.db.db.ref('userAuthDetail/')
         .limitToLast(1)
         .on('value',function(snapshot){
-          //console.log(Object.keys(snapshot.val())[0])
-          //console.log(vm.$store.state.events.eventsArr[0].key)
-          if(Object.keys(snapshot.val())[0] == vm.$store.state.regUsers.regUsers[0].key){
-            //console.log("eq")
-            //do nothing
-          }else{
-            //console.log("not eq")
-            let newEvent = snapshot.val()
-            newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
-            vm.$store.state.regUsers.regUsers.splice(0,0,newEvent[Object.keys(snapshot.val())[0]])
-            vm.$store.state.regUsers.regUserCount += 1
-            //toast
+          if(snapshot.val() != null) {
+            if(vm.$store.state.regUsers.regUsers.length != 0) {
+              //console.log(Object.keys(snapshot.val())[0])
+              //console.log(vm.$store.state.events.eventsArr[0].key)
+              if (Object.keys(snapshot.val())[0] == vm.$store.state.regUsers.regUsers[0].key) {
+                //console.log("eq")
+                //do nothing
+              } else {
+                //console.log("not eq")
+                let newEvent = snapshot.val()
+                newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
+                vm.$store.state.regUsers.regUsers.splice(0, 0, newEvent[Object.keys(snapshot.val())[0]])
+                vm.$store.state.regUsers.regUserCount += 1
+                //toast
+              }
+            }else{
+              //console.log("not eq")
+              let newEvent = snapshot.val()
+              newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
+              vm.$store.state.regUsers.regUsers.splice(0, 0, newEvent[Object.keys(snapshot.val())[0]])
+              vm.$store.state.regUsers.regUserCount += 1
+              //toast
+            }
           }
         })
     },

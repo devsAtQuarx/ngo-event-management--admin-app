@@ -136,10 +136,19 @@ export default{
         if(snapshot.val() != null) {
           //console.log(Object.keys(snapshot.val())[0])
           //console.log(vm.$store.state.events.eventsArr[0].key)
-          if (Object.keys(snapshot.val())[0] == vm.$store.state.events.feedbacks[0].key) {
-            //console.log("eq")
-            //do nothing
-          } else {
+          if(vm.$store.state.events.feedbacks.length != 0) {
+            if (Object.keys(snapshot.val())[0] == vm.$store.state.events.feedbacks[0].key) {
+              //console.log("eq")
+              //do nothing
+            } else {
+              //console.log("not eq")
+              let newEvent = snapshot.val()
+              newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
+              vm.$store.state.events.feedbacks.splice(0, 0, newEvent[Object.keys(snapshot.val())[0]])
+              vm.$store.state.events.feedbackCount += 1
+              //toast
+            }
+          }else{
             //console.log("not eq")
             let newEvent = snapshot.val()
             newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]

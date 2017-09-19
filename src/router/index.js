@@ -11,6 +11,7 @@ import qrcode from '@/components/qrcode'
 import manageRegisteredUsers from '@/components/manageRegisteredUsers'
 import specUserMemDetail from '@/components/specUserMemDetail'
 import genExcelSheetOfUsers from '@/components/genExcelSheetOfUsers'
+import excelSheetSpecEvent from '@/components/excelSheetSpecEvent'
 
 Vue.use(Router)
 
@@ -60,6 +61,10 @@ export default new Router({
         {
           path:'/genExcelSheetOfUsers',
           component : genExcelSheetOfUsers
+        },
+        {
+          path : '/excelSheetSpecEvent/:id',
+          component : excelSheetSpecEvent
         }
       ]
     }

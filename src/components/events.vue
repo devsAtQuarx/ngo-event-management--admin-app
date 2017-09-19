@@ -67,6 +67,11 @@
         QR code
       </v-list-tile>
     </v-tabs-item>
+        <v-tabs-item>
+          <v-list-tile @click="excelSheetSpecEvent(event,i)">
+            Report
+          </v-list-tile>
+        </v-tabs-item>
 
       </v-tabs-bar>
 
@@ -94,6 +99,10 @@ export default{
 
   //methods
   methods:{
+
+    excelSheetSpecEvent(event){
+      this.$router.push('/excelSheetSpecEvent/'+event.key)
+    },
 
     goToQrCode(event,i){
       this.$router.push('/qrcode/'+event.key)

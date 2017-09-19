@@ -1,6 +1,8 @@
 const state = {
   regUsers : [],
-  regUserCount : 0
+  regUserCount : 0,
+  userRegInEvent : [],
+  userRegInEventCount : 0
 }
 
 const getters = {
@@ -9,6 +11,12 @@ const getters = {
   },
   regUserCount : state => {
     return state.regUserCount
+  },
+  userRegInEvent : state => {
+    return state.userRegInEvent
+  },
+  userRegInEventCount : state => {
+    return state.userRegInEventCount
   }
 }
 

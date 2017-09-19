@@ -68,7 +68,7 @@
       </v-list-tile>
     </v-tabs-item>
         <v-tabs-item>
-          <v-list-tile @click="excelSheetSpecEvent(event,i)">
+          <v-list-tile @click="goToEventManagement(event,i)">
             Report
           </v-list-tile>
         </v-tabs-item>
@@ -100,8 +100,8 @@ export default{
   //methods
   methods:{
 
-    excelSheetSpecEvent(event){
-      this.$router.push('/excelSheetSpecEvent/'+event.key)
+    goToEventManagement(event){
+      this.$router.push('/managePeopleInSpecEvent/'+event.key)
     },
 
     goToQrCode(event,i){

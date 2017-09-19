@@ -1,0 +1,130 @@
+<template>
+  <div>
+    manage registered users
+
+    <v-btn @click="goToGenExcelSheetOfUsers">go to gen excel sheet of users</v-btn>
+
+    <li
+      @click="goToSpecUserMemDetail(user)"
+      v-for="user in userRegInEvent"
+    >
+      {{user}}
+    </li>
+
+    <v-btn @click="loadMore()">load More ...</v-btn>
+
+  </div>
+</template>
+
+<script>
+  import {mapGetters} from 'vuex'
+
+  export default {
+
+    data(){
+      return{
+
+      }
+    },
+
+    methods:{
+
+      goToSpecUserMemDetail(user){
+        this.$router.push('/specUserMemDetail/' + user.uid)
+      },
+
+      //showEvents
+      getRegUsers(){
+        let vm = this
+        this.$store.state.db.db.ref('peopleInEvent/' + this.$route.params.id).limitToLast(3)
+          .once('value',function(snapshot){
+            //console.log(snapshot.val())
+            vm.showRegUsersOnDom(snapshot.val())
+          })
+      },
+
+      //showEventsOnDom
+      showRegUsersOnDom(fetchedRegUsers){
+        console.log(fetchedRegUsers)
+        let tempRegUsersArr = []
+
+        for(let i in fetchedRegUsers){
+
+          let tmpObj = {
+            uid:i,
+            name : fetchedRegUsers[i]
+          }
+
+          //fetchedRegUsers[i].key = i
+          tempRegUsersArr.push(tmpObj)
+        }
+        tempRegUsersArr.reverse()
+
+        if(this.$store.state.regUsers.userRegInEvent.length == 0){
+          this.$store.state.regUsers.userRegInEvent = tempRegUsersArr
+        }else{
+          for(let i in tempRegUsersArr){
+
+            if(tempRegUsersArr[i].uid ==
+              this.$store.state.regUsers.userRegInEvent[this.$store.state.regUsers.userRegInEventCount].uid){
+              //do nothing
+            }else{
+              this.$store.state.regUsers.userRegInEvent.push(tempRegUsersArr[i])
+            }
+          }
+        }
+
+        //console.log(fetchedRegUsers)
+      },
+
+      loadMore(){
+        //console.log("loadMore")
+        let vm = this
+
+        this.$store.state.regUsers.userRegInEventCount += 2
+        //console.log(this.$store.state.events.count)
+
+        if(vm.$store.state.regUsers.userRegInEvent[this.$store.state.regUsers.userRegInEventCount]
+          != undefined ){
+
+          this.$store.state.db.db.ref('peopleInEvent/' + this.$route.params.id)
+            .orderByKey()
+            .endAt(vm.$store.state.regUsers.userRegInEvent[this.$store.state.regUsers.userRegInEventCount].uid)
+            .limitToLast(3)
+            .once('value',function(snapshot){
+              //console.log(snapshot.val())
+
+              //
+              vm.showRegUsersOnDom(snapshot.val())
+
+            })
+        }else{
+          // nothing to load more
+
+        }
+      },
+
+      goToGenExcelSheetOfUsers(){
+        this.$router.push('/excelSheetSpecEvent/' + this.$route.params.id)
+      }
+
+    },
+
+    beforeMount(){
+
+      if(this.$store.state.regUsers.userRegInEvent.length == 0){
+        this.getRegUsers()
+      }else{
+        //console.log("else") dont load again
+      }
+
+    },
+
+    computed:{
+      ...mapGetters([
+        'userRegInEvent'
+      ])
+    },
+
+  }
+</script>

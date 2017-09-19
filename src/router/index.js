@@ -12,6 +12,7 @@ import manageRegisteredUsers from '@/components/manageRegisteredUsers'
 import specUserMemDetail from '@/components/specUserMemDetail'
 import genExcelSheetOfUsers from '@/components/genExcelSheetOfUsers'
 import excelSheetSpecEvent from '@/components/excelSheetSpecEvent'
+import managePeopleInSpecEvent from '@/components/managePeopleInSpecEvent'
 
 Vue.use(Router)
 
@@ -61,6 +62,10 @@ export default new Router({
         {
           path:'/genExcelSheetOfUsers',
           component : genExcelSheetOfUsers
+        },
+        {
+          path:'/managePeopleInSpecEvent/:id',
+          component : managePeopleInSpecEvent
         },
         {
           path : '/excelSheetSpecEvent/:id',

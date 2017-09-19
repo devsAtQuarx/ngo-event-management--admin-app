@@ -13,10 +13,7 @@
       name    = "filename.xls">
       Download Excel (you can customize this with html code!)
     </download-excel>
-
-    <li v-for="i in json_data">
-      {{i}}
-    </li>
+    
 
   </div>
 </template>

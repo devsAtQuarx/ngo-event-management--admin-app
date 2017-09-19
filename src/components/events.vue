@@ -72,9 +72,6 @@
 
     </v-tabs>
 
-        <v-btn @click="goToFeedback(event,i)">feedback</v-btn>
-        <v-btn @click="goToQrCode(event,i)">QR code</v-btn>
-
        </v-flex>
      </v-layout >
 
@@ -159,10 +156,6 @@ export default{
       //console.log(fetchedEvents)
     },
 
-    //reverseGotData
-    reverseGotData(){
-
-    },
 
     //loadMore
     loadMoreEvents(){
@@ -239,6 +232,7 @@ export default{
       'showLoader'
     ])
   },
+
   components:{
     InfiniteLoading
   }

@@ -14,7 +14,9 @@
       Download Excel (you can customize this with html code!)
     </download-excel>
 
-   
+    <li v-for="i in json_data">
+      {{i}}
+    </li>
 
   </div>
 </template>
@@ -85,7 +87,7 @@
       this.downFinish  = false
       //start preloader - preparing data to be downloaded
       let vm = this
-      this.$store.state.db.db.ref('peopleInEvent/' + this.$route.params.id)
+      this.$store.state.db.db.ref('checkPeopleInEvent/' + this.$route.params.id)
         .once('value',function (snapshot) {
           //console.log(snapshot.val())
           let userAuthDetail = snapshot.val()
@@ -99,6 +101,8 @@
             vm.$store.state.db.db.ref('membershipDetail/' + Object.keys(userAuthDetail)[i])
               .once('value',function (snapshot2) {
 
+                //console.log(snapshot.val())
+
                 let userMemDetail = snapshot2.val()
                 let membershipStatus
                 let tmpObj
@@ -110,8 +114,8 @@
                   tmpObj = {
                     //auth
                     uid: Object.keys(userAuthDetail)[i],
-                    name: userAuthDetail[Object.keys(userAuthDetail)[i]],
-                    //email: userAuthDetail[i].email,
+                    name: userAuthDetail[Object.keys(userAuthDetail)[i]].name,
+                    //email: userAuthDetail[Object.keys(userAuthDetail)[i]].email,
                     //photoUrl: userAuthDetail[i].photoUrl,
 
                     //mem
@@ -125,7 +129,7 @@
                   tmpObj = {
                     //auth
                     uid : Object.keys(userAuthDetail)[i],
-                    name : userAuthDetail[Object.keys(userAuthDetail)[i]],
+                    name : userAuthDetail[Object.keys(userAuthDetail)[i]].name,
                     //email : userAuthDetail[i].email,
                     //photoUrl : userAuthDetail[i].photoUrl,
 

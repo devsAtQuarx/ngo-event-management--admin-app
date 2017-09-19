@@ -219,7 +219,7 @@ export default{
   beforeMount(){
 
     if(this.$store.state.events.eventsArr.length == 0){
-      this.getEvents()
+      //this.getEvents()
     }else{
       console.log("else")
       console.log(this.$store.state.events.newEventAdded)

@@ -119,6 +119,7 @@
       }
 
     },
+    
 
     computed:{
       ...mapGetters([

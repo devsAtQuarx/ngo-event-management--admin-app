@@ -4,7 +4,7 @@
     <!--qrcode value="Hello, World!" :options="qrPropObj"></qrcode-->
     <qr-code
       :text="text"
-      size="500"
+      size="200"
       color="#f1c40f"
       bg-color="#3498db"
       error-level="L">

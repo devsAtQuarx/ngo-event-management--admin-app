@@ -51,44 +51,40 @@
 
          </v-card>
          <v-tabs dark grow icons>
-      <v-tabs-bar class="cyan" style="height:55px">
+          <v-tabs-bar class="cyan" style="height:55px">
 
-        <v-tabs-item style="filter: opacity(0.7);" class="pl-0 pr-0">
-          <v-list-tile  @click="goToTrackEvent(event,i)" class="pl-0 pr-0">
-            <v-icon class="icon_font">fa-user</v-icon>
-          </v-list-tile>
-          <span style="font-size:10px;margin-top:-15px">track</span>
-        </v-tabs-item>
-
-
-        <v-tabs-item class="pl-0 pr-0">
-          <v-list-tile @click="goToFeedback(event,i)" class="pl-0 pr-0">
-            <v-icon class="icon_font">fa-pencil-square-o</v-icon>
-          </v-list-tile>
-          <span style="font-size:10px;margin-top:-15px">feedback</span>
-        </v-tabs-item>
+                <v-tabs-item style="filter: opacity(0.7);" class="pl-0 pr-0">
+                  <v-list-tile  @click="goToTrackEvent(event,i)" class="pl-0 pr-0">
+                    <v-icon class="icon_font">fa-user</v-icon>
+                  </v-list-tile>
+                  <span style="font-size:10px;margin-top:-15px">track</span>
+                </v-tabs-item>
 
 
-      <v-tabs-item class="pl-0 pr-0">
-        <v-list-tile @click="goToQrCode(event,i)" class="pl-0 pr-0">
-          <v-icon class="icon_font">fa-qrcode</v-icon>
-        </v-list-tile>
-        <span style="font-size:10px;margin-top:-15px">QR code</span>
-      </v-tabs-item>
+                <v-tabs-item class="pl-0 pr-0">
+                  <v-list-tile @click="goToFeedback(event,i)" class="pl-0 pr-0">
+                    <v-icon class="icon_font">fa-pencil-square-o</v-icon>
+                  </v-list-tile>
+                  <span style="font-size:10px;margin-top:-15px">feedback</span>
+                </v-tabs-item>
 
 
-      <v-tabs-item class="pl-0 pr-0">
-        <v-list-tile  class="pl-0 pr-0">
-          <v-icon class="icon_font">fa-file-excel-o</v-icon>
-        </v-list-tile>
-        <span style="font-size:10px;margin-top:-15px">Manage</span>
-      </v-tabs-item>
-
-      </v-tabs-bar>
-
-    </v-tabs>
+              <v-tabs-item class="pl-0 pr-0">
+                <v-list-tile @click="goToQrCode(event,i)" class="pl-0 pr-0">
+                  <v-icon class="icon_font">fa-qrcode</v-icon>
+                </v-list-tile>
+                <span style="font-size:10px;margin-top:-15px">QR code</span>
+              </v-tabs-item>
 
 
+              <v-tabs-item class="pl-0 pr-0">
+                <v-list-tile  class="pl-0 pr-0">
+                  <v-icon class="icon_font">fa-file-excel-o</v-icon>
+                </v-list-tile>
+                <span style="font-size:10px;margin-top:-15px">Manage</span>
+              </v-tabs-item>
+        </v-tabs-bar>
+      </v-tabs>
 
        </v-flex>
      </v-layout >
@@ -112,6 +108,10 @@ export default{
 
   //methods
   methods:{
+
+    goToEventManagement(event){
+      this.$router.push('/managePeopleInSpecEvent/'+event.key)
+    },
 
     goToQrCode(event,i){
       this.$router.push('/qrcode/'+event.key)
@@ -174,10 +174,6 @@ export default{
       //console.log(fetchedEvents)
     },
 
-    //reverseGotData
-    reverseGotData(){
-
-    },
 
     //loadMore
     loadMoreEvents(){
@@ -254,6 +250,7 @@ export default{
       'showLoader'
     ])
   },
+
   components:{
     InfiniteLoading
   }

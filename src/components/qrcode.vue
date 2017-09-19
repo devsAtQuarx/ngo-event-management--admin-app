@@ -1,19 +1,28 @@
 <template>
   <div>
     qrcode {{$route.params.id}}
-    <qrcode value="Hello, World!" :options="qrPropObj"></qrcode>
+    <!--qrcode value="Hello, World!" :options="qrPropObj"></qrcode-->
+    <qr-code
+      :text="text"
+      size="500"
+      color="#f1c40f"
+      bg-color="#3498db"
+      error-level="L">
+    </qr-code>
   </div>
 </template>
 
 <script>
 
-  import VueQrcode from 'vue-qrcode'
+ // import VueQrcode from 'vue-qrcode'
+  import VueQRCodeComponent from 'vue-qrcode-component'
 
   export default {
 
     data(){
      return {
-      qrPropObj : {}
+      qrPropObj : {},
+       text : ''
      }
     },
 
@@ -26,14 +35,16 @@
     },
 
     beforeMount(){
-      this.qrPropObj = {
+      /*this.qrPropObj = {
         size:200,
         value : this.$route.params.id
-      }
+      }*/
+      this.text = this.$route.params.id
     },
 
     components:{
-      'qrcode' : VueQrcode
+      //'qrcode' : VueQrcode,
+      'qr-code':VueQRCodeComponent
     }
 
   }

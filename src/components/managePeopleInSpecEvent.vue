@@ -6,7 +6,7 @@
 
     <li
       @click="goToSpecUserMemDetail(user)"
-      v-for="user in regUsers"
+      v-for="user in userRegInEvent"
     >
       {{user}}
     </li>
@@ -36,7 +36,7 @@
       //showEvents
       getRegUsers(){
         let vm = this
-        this.$store.state.db.db.ref('userAuthDetail/').limitToLast(3)
+        this.$store.state.db.db.ref('peopleInEvent/' + this.$route.params.id).limitToLast(3)
           .once('value',function(snapshot){
             //console.log(snapshot.val())
             vm.showRegUsersOnDom(snapshot.val())
@@ -49,21 +49,27 @@
         let tempRegUsersArr = []
 
         for(let i in fetchedRegUsers){
-          fetchedRegUsers[i].key = i
-          tempRegUsersArr.push(fetchedRegUsers[i])
+
+          let tmpObj = {
+            uid:i,
+            name : fetchedRegUsers[i]
+          }
+
+          //fetchedRegUsers[i].key = i
+          tempRegUsersArr.push(tmpObj)
         }
         tempRegUsersArr.reverse()
 
-        if(this.$store.state.regUsers.regUsers.length == 0){
-          this.$store.state.regUsers.regUsers = tempRegUsersArr
+        if(this.$store.state.regUsers.userRegInEvent.length == 0){
+          this.$store.state.regUsers.userRegInEvent = tempRegUsersArr
         }else{
           for(let i in tempRegUsersArr){
 
-            if(tempRegUsersArr[i].key ==
-              this.$store.state.regUsers.regUsers[this.$store.state.regUsers.regUserCount].key){
+            if(tempRegUsersArr[i].uid ==
+              this.$store.state.regUsers.userRegInEvent[this.$store.state.regUsers.userRegInEventCount].uid){
               //do nothing
             }else{
-              this.$store.state.regUsers.regUsers.push(tempRegUsersArr[i])
+              this.$store.state.regUsers.userRegInEvent.push(tempRegUsersArr[i])
             }
           }
         }
@@ -75,15 +81,15 @@
         //console.log("loadMore")
         let vm = this
 
-        this.$store.state.regUsers.regUserCount += 2
+        this.$store.state.regUsers.userRegInEventCount += 2
         //console.log(this.$store.state.events.count)
 
-        if(vm.$store.state.regUsers.regUsers[this.$store.state.regUsers.regUserCount]
+        if(vm.$store.state.regUsers.userRegInEvent[this.$store.state.regUsers.userRegInEventCount]
           != undefined ){
 
-          this.$store.state.db.db.ref('userAuthDetail/')
+          this.$store.state.db.db.ref('peopleInEvent/' + this.$route.params.id)
             .orderByKey()
-            .endAt(vm.$store.state.regUsers.regUsers[this.$store.state.regUsers.regUserCount].key)
+            .endAt(vm.$store.state.regUsers.userRegInEvent[this.$store.state.regUsers.userRegInEventCount].uid)
             .limitToLast(3)
             .once('value',function(snapshot){
               //console.log(snapshot.val())
@@ -99,14 +105,14 @@
       },
 
       goToGenExcelSheetOfUsers(){
-        this.$router.push('/genExcelSheetOfUsers')
+        this.$router.push('/excelSheetSpecEvent/' + this.$route.params.id)
       }
 
     },
 
     beforeMount(){
 
-      if(this.$store.state.regUsers.regUsers.length == 0){
+      if(this.$store.state.regUsers.userRegInEvent.length == 0){
         this.getRegUsers()
       }else{
         //console.log("else") dont load again
@@ -116,7 +122,7 @@
 
     computed:{
       ...mapGetters([
-        'regUsers'
+        'userRegInEvent'
       ])
     },
 

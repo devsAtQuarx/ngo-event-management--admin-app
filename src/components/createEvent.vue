@@ -114,6 +114,23 @@
 
 </v-layout>
 
+      <!-- duration -->
+      </v-layout>
+      <v-layout row wrap justify-space-around>
+        <v-flex xs12 md10 lg10>
+
+          <!--label (duration in hr) -->
+          <input type="number" v-model="event.duration">
+
+
+          <div v-if="event.duration.length == 0" class="text-field-required-warning">
+            You have not selected any Time !
+          </div>
+          <span class="junk">j</span>
+        </v-flex>
+      </v-layout>
+
+
 
 
 
@@ -369,6 +386,7 @@ export default{
         //date
         date: '',
         time : '',
+        duration : '',
 
         facebookLink : '',
         twitterLink : '',
@@ -450,7 +468,8 @@ export default{
       if(this.event.title.length != 0 &&
         this.event.venue.length != 0 &&
           this.event.date.length != 0 &&
-            this.event.time.length != 0){
+            this.event.time.length != 0 &&
+                this.event.duration.length != 0){
 
         this.showPreloader = true
 

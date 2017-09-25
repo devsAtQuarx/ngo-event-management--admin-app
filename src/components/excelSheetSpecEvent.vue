@@ -1,19 +1,25 @@
 <template>
-  <div>
-    excelSheetSpecEvent {{$route.params.id}}
+  
+    <div>
+      <p class="grey--text text-xs-center download_text" v-show="downFinish != false">
+        Click below to generate Excel Sheet
+      </p>
 
-    <span v-if="downFinish == false">
-      preparing data to be downloaded ... Please Wait ...
-    </span>
-    <download-excel
-      v-else
-      class   = "btn btn-default"
-      :data   = "json_data"
-      :fields = "json_fields"
-      name    = "filename.xls">
-      Download Excel (you can customize this with html code!)
-    </download-excel>
-    
+      <v-layout row wrap justify-space-around>
+          <download-excel
+          v-show="downFinish != false"
+            class   = "btn btn-default"
+            :data   = "json_data"
+            :fields = "json_fields"
+            name    = "filename.xls">
+
+            <v-icon class="grey--text download " style="font-size:200px">
+              cloud_download
+            </v-icon>
+
+          </download-excel>
+      </v-layout>
+      <div class="preload" v-show="downFinish == false"></div>
 
   </div>
 </template>
@@ -179,3 +185,33 @@
 
   }
 </script>
+<style>
+.download_text{
+  font-weight: bolder;
+  font-size: 24px;
+}
+.download{
+
+    position: fixed;
+    top: 45%;
+    height: 30px;
+    margin: -42px 0 0 -12px;
+
+}
+.preload {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -42px 0 0 -12px;
+  background: #1976d2;
+  transform: rotate(45deg);
+  animation: spin 1s infinite linear;
+  z-index: 7000;
+}
+@keyframes spin {
+	0% { -webkit-transform:rotate(0deg); }
+	100% { -webkit-transform:rotate(360deg); }
+}
+</style>

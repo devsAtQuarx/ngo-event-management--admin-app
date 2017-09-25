@@ -79,7 +79,7 @@
 
               <v-tabs-item class="pl-0 pr-0">
                 <v-list-tile @click=" goToEventManagement(event)" class="pl-0 pr-0">
-                  <v-icon class="icon_font">fa-file-excel-o</v-icon>
+                  <v-icon class="icon_font">fa-users</v-icon>
                 </v-list-tile>
                 <span style="font-size:10px;margin-top:-15px">Manage</span>
               </v-tabs-item>

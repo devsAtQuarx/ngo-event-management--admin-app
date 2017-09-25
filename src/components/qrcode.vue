@@ -1,14 +1,17 @@
 <template>
   <div>
 
+    <p class="grey--text text-xs-center qr_text">
+      Scan this Code for Attendance
+    </p>
   <!--  qrcode {{$route.params.id}} -->
     <!--qrcode value="Hello, World!" :options="qrPropObj"></qrcode-->
 
-  <v-layout justify-space-around style="height: -webkit-fill-available;display:flex;">
+  <v-layout row wrap justify-space-around>
 
 
         <qr-code
-          style="align-self:center"
+          class="qr"
           :text="text"
           size="200"
           color="#f1c40f"
@@ -60,3 +63,16 @@
 
   }
 </script>
+<style>
+.qr{
+    position: fixed;
+    top: 45%;
+    height: 30px;
+    margin: -42px 0 0 -12px;
+  
+}
+.qr_text{
+  font-weight: bolder;
+  font-size: 24px;
+}
+</style>

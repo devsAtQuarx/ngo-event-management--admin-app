@@ -1,24 +1,57 @@
 <template>
-  <div>
-    manage registered users
+  <div class="pa-0">
 
-    <v-btn @click="goToGenExcelSheetOfUsers">go to gen excel sheet of users</v-btn>
 
-    <li
-      @click="goToSpecUserMemDetail(user)"
-      v-for="user in userRegInEvent"
-    >
-      {{user}}
-    </li>
+    <v-btn
+    dark
+     fab
+     right
+     bottom
+     fixed
+     slot="activator"
+     @click="goToGenExcelSheetOfUsers"
+      class="create-button"
+     ><v-icon class="white--text excel_icon">fa-file-excel-o</v-icon></v-btn>
 
-    <v-btn @click="loadMore()">load More ...</v-btn>
+
+  
+
+
+    <v-layout row wrap justify-center class="pa-0">
+   <v-flex  md5 lg8 class="pa-0">
+
+       <v-list three-line class="grey lighten-4 pa-0">
+         <template v-for="user in userRegInEvent">
+
+           <v-list-tile  class="pa-0" @click="goToSpecUserMemDetail(user)">
+
+             <v-list-tile-content>
+               <v-list-tile-title v-html="user.name"></v-list-tile-title>
+               <v-list-tile-sub-title v-html="user.uid" ></v-list-tile-sub-title>
+             </v-list-tile-content>
+           </v-list-tile>
+           <v-divider></v-divider>
+         </template>
+       </v-list>
+
+   </v-flex>
+ </v-layout>
+ <infinite-loading
+   v-if="userRegInEvent.length >= 3 && showLoader == true"
+   :on-infinite="onInfinite"
+   ref="infiniteLoading"
+   class = "infiniteLoading"
+ >
+ </infinite-loading>
+
+
 
   </div>
 </template>
 
 <script>
   import {mapGetters} from 'vuex'
-
+  import InfiniteLoading from 'vue-infinite-loading'
   export default {
 
     data(){
@@ -90,13 +123,18 @@
 
               //
               vm.showRegUsersOnDom(snapshot.val())
+                vm.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded')
 
             })
         }else{
           // nothing to load more
+          this.$store.state.events.showLoader = false
 
         }
       },
+      onInfinite() {
+         this.loadMore()
+     },
 
       goToGenExcelSheetOfUsers(){
         this.$router.push('/excelSheetSpecEvent/' + this.$route.params.id)
@@ -151,9 +189,15 @@
 
     computed:{
       ...mapGetters([
-        'userRegInEvent'
+        'userRegInEvent','showLoader'
       ])
     },
 
   }
 </script>
+<style>
+.excel_icon{
+    margin-left: 2px;
+    margin-bottom: 2px;
+}
+</style>

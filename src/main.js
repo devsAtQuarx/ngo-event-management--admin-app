@@ -33,7 +33,7 @@ new Vue({
         store.state.auth.user = user
 
         //logout if not admin
-        if(user.email != 'umang.admin1@gmail.com'){
+        if(user.email != 'umangfoundadm@gmail.com'){
           firebase.auth().signOut();
         }
 

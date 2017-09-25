@@ -51,6 +51,15 @@
           </v-list-tile-content>
         </v-list-tile>
 
+        <v-list-tile @click="sendPushNot()">
+          <v-list-tile-action>
+            <v-icon>home</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Send Push Notification</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
       </v-list>
     </v-navigation-drawer>
 
@@ -102,6 +111,10 @@ export default {
     //goToHome
     goToHome(){
       this.$router.push('/success')
+    },
+
+    sendPushNot(){
+      location.href = 'https://onesignal.com/'
     }
   },
 

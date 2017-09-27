@@ -13,6 +13,7 @@ import specUserMemDetail from '@/components/specUserMemDetail'
 import genExcelSheetOfUsers from '@/components/genExcelSheetOfUsers'
 import excelSheetSpecEvent from '@/components/excelSheetSpecEvent'
 import managePeopleInSpecEvent from '@/components/managePeopleInSpecEvent'
+import sendPushNot from '@/components/sendPushNot'
 
 Vue.use(Router)
 
@@ -70,6 +71,10 @@ export default new Router({
         {
           path : '/excelSheetSpecEvent/:id',
           component : excelSheetSpecEvent
+        },
+        {
+          path: '/sendPushNot2',
+          component : sendPushNot
         }
       ]
     }

@@ -60,6 +60,15 @@
           </v-list-tile-content>
         </v-list-tile>
 
+        <v-list-tile @click="sendPushNot2()">
+          <v-list-tile-action>
+            <v-icon>home</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Send Push Notification 2</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
       </v-list>
     </v-navigation-drawer>
 
@@ -115,6 +124,10 @@ export default {
 
     sendPushNot(){
       location.href = 'https://onesignal.com/'
+    },
+
+    sendPushNot2(){
+      this.$router.push('/sendPushNot2')
     }
   },
 

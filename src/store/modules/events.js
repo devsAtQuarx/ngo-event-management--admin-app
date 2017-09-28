@@ -5,7 +5,11 @@ const state = {
   eventDeleted : false,
   showLoader:true,
   feedbacks : [],
-  feedbackCount : 0
+  feedbackCount : 0,
+
+  //
+  pushNotEve : [],
+  pushNotEveCnt : 0
 }
 
 const getters = {
@@ -26,7 +30,11 @@ const getters = {
   },
   feedbackCount  : state => {
     return state.feedbackCount
-  }
+  },
+
+  pushNotEve  : state => {
+    return state.pushNotEve
+  },
 }
 
 export default {

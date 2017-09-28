@@ -191,7 +191,7 @@
 
     computed:{
       ...mapGetters([
-        'regUsers'
+        'regUsers','showLoader'
       ])
     },
 

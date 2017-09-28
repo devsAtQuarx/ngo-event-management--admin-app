@@ -14,7 +14,7 @@
      ><v-icon class="white--text excel_icon">fa-file-excel-o</v-icon></v-btn>
 
 
-  
+
 
 
     <v-layout row wrap justify-center class="pa-0">

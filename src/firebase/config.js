@@ -1,9 +1,9 @@
 //
 export const config = {
-  apiKey: "AIzaSyA5VY_ZN2eM_RmfmmTmLfwmw5iuVLaUTdQ",
-  authDomain: "umang-foundation.firebaseapp.com",
-  databaseURL: "https://umang-foundation.firebaseio.com",
-  projectId: "umang-foundation",
-  storageBucket: "umang-foundation.appspot.com",
-  messagingSenderId: "930652074537"
+  apiKey: "AIzaSyAxB425uSS5xNir83A8b5dStDC2pGNZFes",
+  authDomain: "umangfoundation-org.firebaseapp.com",
+  databaseURL: "https://umangfoundation-org.firebaseio.com",
+  projectId: "umangfoundation-org",
+  storageBucket: "umangfoundation-org.appspot.com",
+  messagingSenderId: "632642528189"
 }

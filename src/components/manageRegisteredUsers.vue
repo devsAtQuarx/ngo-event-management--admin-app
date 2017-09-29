@@ -19,9 +19,9 @@
    <v-flex  md5 lg8 class="pa-0">
 
        <v-list three-line class="grey lighten-4 pa-0">
-         <template v-for="user in regUsers">
+         <template v-for="user in regUsers" >
 
-           <v-list-tile avatar class="pa-0">
+           <v-list-tile avatar class="pa-0" @click="goToSpecUserMemDetail(user)">
              <v-list-tile-avatar>
                <img v-bind:src="user.photoUrl">
              </v-list-tile-avatar>
@@ -64,7 +64,15 @@
     methods:{
 
       goToSpecUserMemDetail(user){
-        this.$router.push('/specUserMemDetail/' + user.uid)
+        let vm = this
+        this.$store.state.db.db.ref('membershipDetail/' + user.uid)
+          .once('value',function(memStatusSnap){
+            if(memStatusSnap.val() == null ){
+              window.alert('not a mem')
+            }else{
+              vm.$router.push('/specUserMemDetail/' + user.uid)
+            }
+          })
       },
 
       //showEvents

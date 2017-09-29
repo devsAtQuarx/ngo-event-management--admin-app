@@ -13,8 +13,9 @@
         <qr-code
           class="qr text-xs-center"
           :text="text"
-          color="#f1c40f"
-          bg-color="#3498db"
+          size="200"
+          color="#000"
+          bg-color="#fff"
           error-level="L">
         </qr-code>
 
@@ -67,8 +68,7 @@
     position: fixed;
     top: 45%;
     height: 30px;
-
-
+    /*margin: -42px 0 0 -12px;*/
 }
 .qr_text{
   font-weight: bolder;

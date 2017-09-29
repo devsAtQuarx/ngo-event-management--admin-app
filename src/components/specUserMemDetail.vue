@@ -243,11 +243,15 @@
       </v-flex>
     </v-layout>
 
+    <calUserTime :userUid="$route.params.id" ></calUserTime>
 
   </div>
 </template>
 <script>
+  import calUserTime from './calUserTime'
+
   export default {
+
 
     data(){
       return {
@@ -285,9 +289,14 @@
     },
 
     beforeMount(){
-      this.getSpecUserDetail(),
+      this.getSpecUserDetail()
       this.showPreloader=true
     },
+
+    components :{
+      'calUserTime': calUserTime    
+    },
+    
     updated(){
       this.showPreloader=false
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="create-event">
-
+    <v-container fluid>
     <v-form >
       <v-layout row wrap justify-space-around >
         <v-flex xs12 md10 lg10 >
@@ -116,19 +116,32 @@
 
       <!-- duration -->
       </v-layout>
-      <v-layout row wrap justify-space-around>
+      <!--v-layout row wrap justify-space-around>
         <v-flex xs12 md10 lg10>
 
-          <!--label (duration in hr) -->
+          <!--label (duration in hr) >
           <input type="number" v-model="event.duration">
 
 
           <div v-if="event.duration.length == 0" class="text-field-required-warning">
-            You have not selected any Time !
+            You have not selected any Time duration(hours) !
           </div>
           <span class="junk">j</span>
         </v-flex>
-      </v-layout>
+      </v-layout-->
+      <v-layout row wrap justify-space-around>
+      <v-flex xs12 md10 lg10>
+        <v-text-field
+        prepend-icon="fa-hourglass-half"
+          label="Event Duration(in Hrs)"
+          v-model="event.duration"
+        ></v-text-field>
+        <span v-if="event.duration.length == 0" class="text-field-required-warning">
+          You have not selected any Time duration !
+        </span>
+        <span class="junk">j</span>
+      </v-flex>
+    </v-layout>
 
 
 
@@ -286,6 +299,9 @@
         <br>
         <br>
         <br>
+        <br>
+
+        <br>
 
         <v-layout row wrap justify-space-around style="float:left;background:">
         <span v-for="(photo,i) in photos"  >
@@ -347,6 +363,7 @@
 
 
     </v-form>
+  </v-container>
 
     <div class="preload" v-show="showPreloader"></div>
 

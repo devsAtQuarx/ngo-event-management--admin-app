@@ -1,6 +1,7 @@
 const state = {
   user : {},
-  isLoggedIn : false
+  isLoggedIn : false,
+  drawer:true
 }
 
 const getters = {
@@ -9,6 +10,9 @@ const getters = {
   },
   isLoggedIn : state => {
     return state.isLoggedIn
+  },
+  drawer : state => {
+    return state.drawer
   }
 }
 

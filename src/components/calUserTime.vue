@@ -66,23 +66,27 @@
         let sumHr = 0
         let sumMin = 0
 
-        for(let i in events){
-          //console.log(events[i].leave + " | " + events[i].join)
-          let endTime = moment(events[i].leave)
-          let startTime = moment(events[i].join)
-          //console.log(moment.duration(endTime.diff(startTime)).hours() + "|"
+        for(let i in events) {
+          //console.log(events)
+          //console.log(events[i].leave) //undefined
+          if (events[i].leave != undefined) { //condition
+            //console.log(events[i].leave + " | " + events[i].join)
+            let endTime = moment(events[i].leave)
+            let startTime = moment(events[i].join)
+            //console.log(moment.duration(endTime.diff(startTime)).hours() + "|"
             // + moment.duration(endTime.diff(startTime)).minutes())
 
-          sumHr += moment.duration(endTime.diff(startTime)).hours()
-          sumMin += moment.duration(endTime.diff(startTime)).minutes()
+            sumHr += moment.duration(endTime.diff(startTime)).hours()
+            sumMin += moment.duration(endTime.diff(startTime)).minutes()
 
-          let tmpObj = {
-            key:i,
-            hr:moment.duration(endTime.diff(startTime)).hours(),
-            min:moment.duration(endTime.diff(startTime)).minutes()
-          }
+            let tmpObj = {
+              key: i,
+              hr: moment.duration(endTime.diff(startTime)).hours(),
+              min: moment.duration(endTime.diff(startTime)).minutes()
+            }
 
-          this.detailArr.push(tmpObj)
+            this.detailArr.push(tmpObj)
+          }//if ends
 
         }//for ends
 
@@ -100,6 +104,17 @@
             //console.log(newSumHr + "hr " + newSumMin + "min")
             this.userTime.hr = newSumHr
             this.userTime.min = newSumMin
+          }
+        }else{
+
+          if(sumMin < 10){
+            //console.log(newSumHr + "hr " + newSumMin + "min")
+            this.userTime.hr = sumHr
+            this.userTime.min ='0' + sumMin
+          }else{
+            //console.log(newSumHr + "hr " + newSumMin + "min")
+            this.userTime.hr = sumHr
+            this.userTime.min = sumMin
           }
         }
       },

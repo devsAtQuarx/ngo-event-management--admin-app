@@ -206,13 +206,22 @@
       <br>
       <br>
 
+      <span v-if="showTimeSpentByUsers">
+        <hr>
+        <div>
+          <calEventTime :eventKey="$route.params.id" ></calEventTime>
+        </div>
+      </span>
+      <span v-else>
+        <v-btn flat @click="showTimeSpentByUsers = true">Time Spent by Users in Event</v-btn>
+      </span>
 
 
     </v-flex>
    </v-layout>
 </div>
 
-<v-layout row justify-center style="position: relative;">
+    <v-layout row justify-center style="position: relative;">
     <v-dialog v-model="dialog2" lazy absolute >
       <v-btn
       dark
@@ -242,12 +251,12 @@
 </v-flex>
 </v-layout>
 
-
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import calEventTime from './calEventTime'
 
 export default{
 
@@ -259,7 +268,8 @@ export default{
      cnt:0,
      loader:false,
      loader2:false,
-     specEventFromDb: {}
+     specEventFromDb: {},
+      showTimeSpentByUsers : false
    }
   },
 
@@ -267,15 +277,18 @@ export default{
   methods:{
     prev_image(){
     this.cnt--
-   this.loader=true
-},
+    this.loader=true
+    },
+
     loaded(){
       this.loader=false
     },
+
     next_image(){
         this.cnt++
         this.loader=true
     },
+
     loaded2 () {
       if(this.specEventFromDb.downloadUrl != '')
         {
@@ -322,6 +335,7 @@ export default{
       'drawer'
     ])
   },
+
   beforeMount(){
      this.getSpecEvent(),
      this.vm,
@@ -329,10 +343,15 @@ export default{
     console.log(this.loader2)
     this.loaded2()
    },
+
    beforeUpdate(){
      this.loader2=false
      console.log(this.loader2)
    },
+
+  components:{
+     'calEventTime' : calEventTime
+  }
 
 }
 </script>

@@ -14,8 +14,8 @@
           class="qr"
           :text="text"
           size="200"
-          color="#f1c40f"
-          bg-color="#3498db"
+          color="#000"
+          bg-color="#fff"
           error-level="L">
         </qr-code>
 
@@ -69,7 +69,7 @@
     top: 45%;
     height: 30px;
     margin: -42px 0 0 -12px;
-  
+
 }
 .qr_text{
   font-weight: bolder;

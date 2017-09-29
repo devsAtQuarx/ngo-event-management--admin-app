@@ -1,173 +1,155 @@
-<template>
-  <div>
-
-    <v-btn fab dark class="teal fixed-floating-button" @click="goToCreateEvent">
-      <v-icon dark>add</v-icon>
-    </v-btn>
-    <v-layout row wrap justify-space-around class="events_layout">
-    <v-flex xs12 md10 lg10 v-for="(event,i) in eventsArr" class="primary ma-1 elevation-2">
-         <v-card class="blue-grey darken-4 white--text" @click="goToSpecEvent(event, i)" style="cursor: pointer;">
-           <v-container fluid grid-list-lg>
-             <v-layout row>
-               <v-flex xs7>
-                 <div>
-                   <div class="headline">{{event.title}}</div>
-                   <v-icon class="white--text icon_font">location_on</v-icon>
-                   <span>{{event.venue}}</span>
+<template >
+  <div class="pa-0">
 
 
-                 </div>
-                 <br>
-
-                 <div >
-                   <v-icon class="white--text icon_font" >date_range</v-icon>
-                   <span>{{event.date}}</span>
-                   <v-spacer></v-spacer>
-                   <v-icon class="white--text icon_font">access_time</v-icon>
-                   <span>{{event.time}}</span>
-
-                 </div>
-
-               </v-flex>
-               <v-flex xs5>
-                  <v-card-media
-                     src="/static/img/icons/umangFoundation.jpg"
-                     height="125px"
-                     contain
-                     v-if="event.downloadUrl ==undefined"
-                   ></v-card-media>
-
-                   <v-card-media
-                      :src="event.downloadUrl[0]"
-                      height="125px"
-                      contain
-                      v-else
-                    ></v-card-media>
+    <v-container  grid-list-lg text-xs-center style="padding:0px">
 
 
-               </v-flex>
-             </v-layout>
-           </v-container>
+    <v-layout  row wrap justify-space-around  >
+   <v-flex  lg4 md10 v-for="(event,i) in eventsArr">
+     <v-card>
+       <v-card-media v-if="event.downloadUrl ==undefined" src="/static/img/icons/umangFoundation.jpg"
+       @click="goToSpecEvent(event, i)"
+       style="cursor:pointer"
+       height="200px">
+       </v-card-media>
+       <v-card-media v-else :src="event.downloadUrl[0]" height="200px"
+       style="cursor:pointer"
+        @click="goToSpecEvent(event, i)">
+       </v-card-media>
+       <v-card-title primary-title>
 
-         </v-card>
-         <v-tabs dark grow icons>
-          <v-tabs-bar class="cyan" style="height:55px">
-
-                <!--v-tabs-item style="filter: opacity(0.7);" class="pl-0 pr-0">
-                  <v-list-tile  @click="goToTrackEvent(event,i)" class="pl-0 pr-0">
-                    <v-icon class="icon_font">fa-user</v-icon>
-                  </v-list-tile>
-                  <span style="font-size:10px;margin-top:-15px">track</span>
-                </v-tabs-item-->
-
-
-                <v-tabs-item style="filter: opacity(0.7);" class="pl-0 pr-0">
-                  <v-list-tile @click="goToFeedback(event,i)" class="pl-0 pr-0">
-                    <v-icon class="icon_font">fa-pencil-square-o</v-icon>
-                  </v-list-tile>
-                  <span style="font-size:10px;margin-top:-15px">feedback</span>
-                </v-tabs-item>
+           <div style="width:-webkit-fill-available">
 
 
-              <v-tabs-item class="pl-0 pr-0">
-                <v-list-tile @click="goToQrCode(event,i)" class="pl-0 pr-0">
-                  <v-icon class="icon_font">fa-qrcode</v-icon>
-                </v-list-tile>
-                <span style="font-size:10px;margin-top:-15px">QR code</span>
-              </v-tabs-item>
+               <div class="headline mb-0" style="float:left">{{event.title}}</div>
+         </div>
 
 
-              <v-tabs-item class="pl-0 pr-0">
-                <v-list-tile @click=" goToEventManagement(event)" class="pl-0 pr-0">
-                  <v-icon class="icon_font">fa-users</v-icon>
-                </v-list-tile>
-                <span style="font-size:10px;margin-top:-15px">Manage</span>
-              </v-tabs-item>
-        </v-tabs-bar>
-      </v-tabs>
+         <div>
+         <v-icon class="icon_font">location_on</v-icon>
+         <span v-for="i in event.venue.length" v-show="i < 25" class="grey--text">{{event.venue[i-1]}}</span>
+         <span v-show="event.venue.length > 25" class="grey--text">...</span>
+         </div>
 
-       </v-flex>
-     </v-layout >
 
-      <infinite-loading
-        v-if="eventsArr.length >= 3 && showLoader == true"
-        :on-infinite="onInfinite"
-        ref="infiniteLoading"
-        class = "infiniteLoading"
-      >
-      </infinite-loading>
+       </v-card-title>
+
+       <div>
+         <span style="float:left" class="pl-3">
+             <v-icon class="icon_font" >date_range</v-icon>
+             <span class="grey--text">{{event.date}}</span>
+        </span>
+
+        <span>
+         <v-icon class="icon_font" >access_time</v-icon>
+         <span class="grey--text">{{event.time}}</span>
+       </span>
+       <span style="float:right" class="pr-3">
+         <v-icon class="icon_font" style="font-size:15px">fa-hourglass-half</v-icon>
+         <span class="grey--text">{{event.duration}}hrs</span>
+       </span>
+       </div>
+       <v-card-actions class="pr-1">
+         <v-spacer></v-spacer>
+         <v-btn flat round outline class="grey--text" @click="goToFeedback(event, i)"
+          style="font-size:10px;height:30px;width:40px">
+          <v-icon style="font-size:17px" class="mr-1">fa-pencil-square-o</v-icon>
+
+          <span >Feedback</span>
+         </v-btn>
+
+         <v-btn flat round outline class="grey--text" @click="goToQrCode(event, i)"
+          style="font-size:10px;height:30px;width:40px">
+          <v-icon style="font-size:17px" class="mr-1">fa-qrcode</v-icon>
+
+          <span >QR code</span>
+         </v-btn>
+
+         <v-btn flat round outline class="grey--text" @click="goToEventManagement(event,i)"
+
+        style="font-size:10px;height:30px;width:40px">
+         <v-icon style="font-size:14px" class="mr-1">fa-users</v-icon>
+          <span >Manage</span>
+       </v-btn>
+     </v-card-text>
+
+
+       </v-card-actions>
+     </v-card>
+   </v-flex>
+ </v-layout>
+</v-container>
+<v-btn fab dark fixed right bottom class="teal fixed-floating-button" @click="goToCreateEvent">
+  <v-icon dark>add</v-icon>
+</v-btn>
+
+    <infinite-loading
+      v-if="eventsArr.length >= 3 && showLoader == true"
+      :on-infinite="onInfinite"
+      ref="infiniteLoading"
+      class = "infiniteLoading"
+    >
+    </infinite-loading>
+
+
+
+
+
 
   </div>
 </template>
 
+
 <script>
 import {mapGetters} from 'vuex'
 import InfiniteLoading from 'vue-infinite-loading'
-
 export default{
+  //data
+  data(){
+    return{
 
+
+    }
+  },
   //methods
   methods:{
-
-    goToEventManagement(event){
-      //
-      this.$store.state.regUsers.userRegInEvent = []
-      this.$store.state.regUsers.userRegInEventCount = 0
-      this.$router.push('/managePeopleInSpecEvent/'+event.key)
-    },
-
     goToQrCode(event,i){
       this.$router.push('/qrcode/'+event.key)
     },
-
-    //goToFeedback
-    goToFeedback(event, i){
-        //
-        this.$store.state.events.feedbacks = []
-        this.$store.state.events.feedbackCount = 0
-        this.$router.push('/feedback/'+event.key)
-    },
-
-    //goToTrackEvent
-    goToTrackEvent(event, i){
-      this.$router.push('/trackEvent/'+event.key)
+    //goToCreateEvent
+    goToCreateEvent(){
+      this.$router.push('/success/createEvent')
     },
 
     //goToSpecEvent
     goToSpecEvent(event, i){
       this.$router.push('/specEvent/'+event.key)
     },
-
-    //goToCreateEvent
-    goToCreateEvent(){
-      this.$router.push('/success/createEvent')
-    },
-
     //showEvents
     getEvents(){
         let vm = this
-        this.$store.state.db.db.ref('events/').limitToLast(3)
+        this.$store.state.db.db.ref('events/').limitToLast(6)
         .once('value',function(snapshot){
-
-          vm.showEventsOnDom(snapshot.val())
+          vm.reverseFetchedEventsOrder(snapshot.val())
         })
     },
-
-    //showEventsOnDom
-    showEventsOnDom(fetchedEvents){
+    //reverseFetchedEventsOrder
+    reverseFetchedEventsOrder(fetchedEvents){
       let tempEventArr = []
-
       for(let i in fetchedEvents){
         fetchedEvents[i].key = i
         tempEventArr.push(fetchedEvents[i])
       }
       tempEventArr.reverse()
-
+      this.showEventsOnDom(tempEventArr)
+    },
+    showEventsOnDom(tempEventArr){
+      //
       if(this.$store.state.events.eventsArr.length == 0){
         this.$store.state.events.eventsArr = tempEventArr
       }else{
         for(let i in tempEventArr){
-
           if(tempEventArr[i].key ==
             this.$store.state.events.eventsArr[this.$store.state.events.count].key){
             //do nothing
@@ -176,106 +158,103 @@ export default{
           }
         }
       }
-
       //console.log(fetchedEvents)
     },
-
+    goToEventManagement(event){
+      //
+      this.$store.state.regUsers.userRegInEvent = []
+      this.$store.state.regUsers.userRegInEventCount = 0
+      this.$router.push('/managePeopleInSpecEvent/'+event.key)
+    },
+    //goToFeedback
+    goToFeedback(event, i){
+        //
+        this.$store.state.events.feedbacks = []
+        this.$store.state.events.feedbackCount = 0
+        this.$router.push('/feedback/'+event.key)
+    },
 
     //loadMore
     loadMoreEvents(){
       //console.log("loadMore")
       let vm = this
-
-      this.$store.state.events.count += 2
+      this.$store.state.events.count += 5
       //console.log(this.$store.state.events.count)
-
       if(vm.$store.state.events.eventsArr[this.$store.state.events.count]
           != undefined ){
-
         this.$store.state.db.db.ref('events/')
         .orderByKey()
         .endAt(vm.$store.state.events.eventsArr[this.$store.state.events.count].key)
-        .limitToLast(3)
+        .limitToLast(6)
         .once('value',function(snapshot){
           //console.log(snapshot.val())
-
           //
-          vm.showEventsOnDom(snapshot.val())
+          vm.reverseFetchedEventsOrder(snapshot.val())
           vm.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded')
-
         })
       }else{
         // nothing to load more
-        this.$store.state.events.showLoader = false
+       this.$store.state.events.showLoader = false
       }
     },
     onInfinite() {
-       this.loadMoreEvents()
-   },
-
+      this.loadMoreEvents()
+  }
   },
-
   //mounted
   beforeMount(){
-
-    if(this.$store.state.events.eventsArr.length == 0 && this.$store.state.events.newEventAdded == false){
+    if(this.$store.state.events.eventsArr.length == 0){
       this.getEvents()
-    }else{
-      console.log("else")
-      console.log(this.$store.state.events.newEventAdded)
     }
-
-    if(this.$store.state.events.newEventAdded == true){
-
-      let vm = this
-
-      this.$store.state.db.db.ref('events/').limitToLast(1)
-      .once('value',function(snapshot){
-        let newEvent = snapshot.val()
-        newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
-
-        vm.$store.state.events.eventsArr.splice(0,0,newEvent[Object.keys(snapshot.val())[0]])
-        console.log(vm.$store.state.events.eventsArr)
-
-        vm.$store.state.events.count += 1
-
-        vm.$store.state.events.newEventAdded = false
-      })
-    }
-
-    if(this.$store.state.events.eventDeleted == true){
-      this.$store.state.events.count -= 1
-      this.$store.state.events.eventDeleted == false
-    }
-
   },
-
+  //updated
+  updated(){
+    let vm = this
+    this.$store.state.db.db.ref('events/')
+    .limitToLast(1)
+    .on('value',function(snapshot){
+      if(snapshot.val() != null) {
+        //console.log(Object.keys(snapshot.val())[0])
+        //console.log(vm.$store.state.events.eventsArr[0].key)
+        console.log(vm.$store.state.events.eventsArr)
+        if(vm.$store.state.events.eventsArr.length != 0) {
+          if (Object.keys(snapshot.val())[0] == vm.$store.state.events.eventsArr[0].key) {
+            //console.log("eq")
+            //do nothing
+          } else {
+            //console.log("not eq")
+            let newEvent = snapshot.val()
+            newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
+            vm.$store.state.events.eventsArr.splice(0, 0, newEvent[Object.keys(snapshot.val())[0]])
+            vm.$store.state.events.count += 1
+            //toast
+          }
+        }else{
+          let newEvent = snapshot.val()
+          newEvent[Object.keys(snapshot.val())[0]].key = Object.keys(snapshot.val())[0]
+          vm.$store.state.events.eventsArr.splice(0, 0, newEvent[Object.keys(snapshot.val())[0]])
+          vm.$store.state.events.count += 1
+        }
+      }
+    })
+  },
+  //computed
   computed:{
     ...mapGetters([
-      'eventsArr',
-      'showLoader'
-    ])
+      'eventsArr','showLoader'
+    ]),
   },
-
   components:{
-    InfiniteLoading
-  }
+   InfiniteLoading
+ }
 }
 </script>
 
 <style scoped>
-.fixed-floating-button{
-  position:fixed;
-  right: 20px;
-  bottom :20px;
-  z-index: 2;
-}
 .icon_font{
   font-size:19px
 }
-.events_layout{
-  margin-top: -4.9vh!important;
-
+main {
+    padding-top: 0px !important;
 }
-
 </style>

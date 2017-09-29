@@ -1,6 +1,10 @@
 <template>
   <div>
-   <v-layout row wrap justify-space-around>
+    <div class="preload" v-show="this.showPreloader== true"></div>
+    <p v-if="feedbacks.length==0" class="text-xs-center grey--text display-1"
+    v-show="this.showPreloader== false">
+      You have no Feedbacks on this Event</p>
+   <v-layout row wrap justify-space-around v-show="this.showPreloader== false">
     <v-flex xs12 md10 lg10>
       <div v-for="feedback in feedbacks" class="pt-2 pb-2" @click="goToSpecUserMemDetail(feedback.uid)">
         <div class="feedback_uid">{{feedback.uid}}</div>
@@ -27,6 +31,7 @@ export default{
   //data
   data(){
     return{
+      showPreloader:false
       //feedbacks : [],
       //feedbackCount : 0
     }
@@ -78,6 +83,9 @@ export default{
       }
       //console.log(fetchedEvents)*/
     },
+    loaded(){
+       setTimeout(() => (this.showPreloader = false), 2000)
+    },
 
     loadMoreFeedbacks(){
       //console.log("loadMore")
@@ -120,6 +128,8 @@ export default{
 
   //beforeMount
   beforeMount(){
+    this.loaded()
+      this.showPreloader=true
     if(this.$store.state.events.feedbacks.length == 0){
       this.getFeedback()
     }else{
@@ -167,4 +177,20 @@ export default{
     font-size: 12px;
     font-weight: bold;
   }
-</style>
+  .preload {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin: -42px 0 0 -12px;
+    background: #1976d2;
+    transform: rotate(45deg);
+    animation: spin 1s infinite linear;
+    z-index: 7000;
+  }
+  @keyframes spin {
+  	0% { -webkit-transform:rotate(0deg); }
+  	100% { -webkit-transform:rotate(360deg); }
+  }
+  </style>

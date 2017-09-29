@@ -1,6 +1,7 @@
 <template>
   <div>
 
+
     <v-layout row wrap justify-center class="pa-0">
    <v-flex  md5 lg10 class="pa-0">
 
@@ -28,7 +29,8 @@
 
    </v-flex>
  </v-layout>
- <v-layout row wrap justify-space-around class="pa-0 grey--text" >
+ <div v-if="this.notMember!=false" class="grey--text text-xs-center">The User is not a Member</div>
+ <v-layout row wrap justify-space-around class="pa-0 grey--text" v-else>
       <v-flex xs12 md5 lg3>
         <div>
           <span class="memdetails_head">Email:-
@@ -253,8 +255,11 @@
 
     data(){
       return {
+        showPreloader:false,
+        notMember:false,
         userBasicDetail : {},
-        userMemDetail : {}
+        userMemDetail : {},
+
       }
     },
 
@@ -264,14 +269,19 @@
         this.$store.state.db.db.ref('checkAuthDetail/' + vm.$route.params.id)
           .once('value',function (snapshot) {
             vm.userBasicDetail = snapshot.val()
-
+            console.log(vm.userBasicDetail)
             //
             vm.$store.state.db.db.ref('membershipDetail/' + vm.$route.params.id)
               .once('value',function(snapshot2){
-                if(snapshot2.val() != null )
+                if(snapshot2.val() != null ){
                   vm.userMemDetail = snapshot2.val()
-                else
+                  vm.notMember=false
+                }
+                else{
                   vm.userMemDetail = "This User is Not a Member !"
+                  vm.notMember=true
+                }
+
               })
 
           })
@@ -280,10 +290,15 @@
 
     beforeMount(){
       this.getSpecUserDetail()
+      this.showPreloader=true
     },
 
     components :{
-      'calUserTime': calUserTime
+      'calUserTime': calUserTime    
+    },
+    
+    updated(){
+      this.showPreloader=false
     }
   }
 </script>

@@ -1,23 +1,86 @@
 <template>
   <div>
-    send push notification<br>
-    title: <input v-model="notDet.title"><br>
-    content: <input v-model="notDet.content"><br>
-    on click link: <input v-model="notDet.link"><br>
-    <button @click="sendToAll">sendToALl</button>
+    <div>
+    <p class="grey--text text-xs-center" style="font-size:24px;font-weight:600">
+      send push notification
+    </p>
 
-    <li v-for="e in pushNotEve" @click="sendToPeopleInEvent(e.eventKey)">{{e.eventTitle}}</li>
+    <v-text-field
+            v-if="this.snackbar==false"
+            v-model="notDet.title"
+            label="Title"
+    ></v-text-field>
 
-    <button @click="loadMore()">load more</button>
+    <v-text-field
+            v-if="this.snackbar==false"
+            v-model="notDet.content"
+            label="Content"
+    ></v-text-field>
+    <v-text-field
+            v-if="this.snackbar==false"
+            v-model="notDet.link"
+            label="On Click Link"
+    ></v-text-field>
+</div>
+
+    <v-checkbox
+    v-if="this.snackbar==false"
+     v-model="checkbox"
+    label="Send to All"
+     data-vv-name="checkbox"
+     @click="sendToAll"
+
+   ></v-checkbox>
+
+   <div v-for="e in this.pushNotEve" >
+     <v-checkbox
+      v-model="checkbox"
+     :label="e.eventTitle"
+
+      @click="sendToPeopleInEvent(e.eventKey)"
+
+    ></v-checkbox>
+   </div>
+
+   <v-snackbar
+   :timeout="timeout"
+   :top="y === 'top'"
+   :bottom="y === 'bottom'"
+   :right="x === 'right'"
+   :left="x === 'left'"
+   :multi-line="mode === 'multi-line'"
+   :vertical="mode === 'vertical'"
+   v-model="snackbar"
+ >
+   {{ text }}
+   <v-btn flat class="white--text" @click.native="snackbar = false">Close</v-btn>
+ </v-snackbar>
+
+     <infinite-loading
+       v-if="pushNotEve.length >= 3 && showLoader == true"
+       :on-infinite="onInfinite"
+       ref="infiniteLoading"
+       class = "infiniteLoading"
+     >
+     </infinite-loading>
+
   </div>
 </template>
 <script>
-  import {mapGetters} from 'vuex'
+import {mapGetters} from 'vuex'
+import InfiniteLoading from 'vue-infinite-loading'
 
   export default {
 
     data(){
       return {
+        snackbar: false,
+      y: 'bottom',
+      x: null,
+      mode: '',
+      timeout: 5000,
+      text: '',
+        checkbox: false,
         notDet : {
           title : '',
           content : '',
@@ -35,6 +98,7 @@
 
       sendToAll(){
         let vm = this
+        vm.snackbar=true
 
         if(vm.notDet.title != '' && vm.notDet.content != '' && vm.notDet.link != ''){
 
@@ -50,18 +114,24 @@
 
                   //
                   vm.$store.state.db.db.ref('nots/').set(tokens)
+
+
+                  vm.text="Push Notification sent"
+                  vm.loaded2()
                 })
             })
         }else{
           //toast
           //cannot be empty
-          window.alert('no') //toast
+          vm.text="Please Fill All the Fields" //toast
+          vm.loaded2()
         }
 
       },
 
       sendToPeopleInEvent(e){
         let vm = this
+        vm.snackbar=true
         console.log(e)
 
 
@@ -76,17 +146,23 @@
                   console.log(snap.val())
 
                 vm.$store.state.db.db.ref('nots/').set(snap.val())
-                })
 
+                })
+                  vm.text="Push Notification sent"
+                  vm.loaded2()
               })
           }else{
             //toast
             //cannot be empty
-            window.alert('no') //toast
+            vm.text="Please Fill All the Fields"//toast
+            vm.loaded2()
           }
 
 
 
+      },
+      loaded2 () {
+        setTimeout(() => (this.snackbar = false), 3000)
       },
 
       loadMore(){
@@ -108,16 +184,19 @@
 
               //
               vm.showOnDom(snapshot.val())
+              vm.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded')
               //vm.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded')
 
             })
         }else{
           // nothing to load more
-          //this.$store.state.events.showLoader = false
+          this.$store.state.events.showLoader = false
 
         }
       },
-
+      onInfinite() {
+        this.loadMore()
+    },
       showOnDom(fetchedEvents){
 
         let tempRegEventsArr = []
@@ -170,9 +249,12 @@
 
     computed:{
       ...mapGetters([
-        'pushNotEve'
+        'pushNotEve','showLoader'
       ])
     },
+    components:{
+     InfiniteLoading
+   },
 
     //updated
     updated(){

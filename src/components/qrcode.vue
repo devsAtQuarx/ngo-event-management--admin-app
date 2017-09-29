@@ -11,7 +11,7 @@
 
 
         <qr-code
-          class="qr"
+          class="qr text-xs-center"
           :text="text"
           size="200"
           color="#000"
@@ -68,8 +68,7 @@
     position: fixed;
     top: 45%;
     height: 30px;
-    margin: -42px 0 0 -12px;
-
+    /*margin: -42px 0 0 -12px;*/
 }
 .qr_text{
   font-weight: bolder;

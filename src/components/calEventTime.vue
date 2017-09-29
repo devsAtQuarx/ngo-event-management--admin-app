@@ -53,7 +53,7 @@
 
       getUserAtt(){
         let vm = this
-        this.$store.state.db.db.ref('attendanceUser/' + this.userUid )
+        this.$store.state.db.db.ref('attendanceEvents/' + this.$store.state.user.uid )
           .once('value',function(snap){
             //console.log(snap.val())
             vm.calTime(snap.val())
@@ -71,7 +71,7 @@
           let endTime = moment(events[i].leave)
           let startTime = moment(events[i].join)
           //console.log(moment.duration(endTime.diff(startTime)).hours() + "|"
-            // + moment.duration(endTime.diff(startTime)).minutes())
+          // + moment.duration(endTime.diff(startTime)).minutes())
 
           sumHr += moment.duration(endTime.diff(startTime)).hours()
           sumMin += moment.duration(endTime.diff(startTime)).minutes()

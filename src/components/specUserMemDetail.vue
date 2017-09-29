@@ -240,10 +240,16 @@
         </span>
         <v-divider style="ru"></v-divider>
       </div>
+        <br>
+
+        <div>
+          <calUserTime :userUid="$route.params.id" ></calUserTime>
+        </div>
+
       </v-flex>
     </v-layout>
 
-    <calUserTime :userUid="$route.params.id" ></calUserTime>
+
 
   </div>
 </template>
@@ -294,9 +300,9 @@
     },
 
     components :{
-      'calUserTime': calUserTime    
+      'calUserTime': calUserTime
     },
-    
+
     updated(){
       this.showPreloader=false
     }

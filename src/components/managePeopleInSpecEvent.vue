@@ -1,8 +1,14 @@
 <template>
   <div class="pa-0">
-
-
+    <div class="preload" v-show="this.showPreloader== true"></div>
+    <div v-if="this.userRegInEvent.length==0"
+     v-show="this.showPreloader== false"
+    class="grey--text text-xs-center display-1">
+    No one has Joined this Event yet
+  </div>
     <v-btn
+    v-show="this.showPreloader== false"
+    v-if="this.userRegInEvent.length!=0"
     dark
      fab
      right
@@ -17,7 +23,7 @@
 
 
 
-    <v-layout row wrap justify-center class="pa-0">
+    <v-layout row wrap justify-center class="pa-0" v-show="this.showPreloader== false">
    <v-flex  md5 lg8 class="pa-0">
 
        <v-list three-line class="grey lighten-4 pa-0">
@@ -56,7 +62,7 @@
 
     data(){
       return{
-
+        showPreloader:false
       }
     },
 
@@ -138,17 +144,22 @@
 
       goToGenExcelSheetOfUsers(){
         this.$router.push('/excelSheetSpecEvent/' + this.$route.params.id)
+      },
+      loaded(){
+         setTimeout(() => (this.showPreloader = false), 3000)
       }
 
     },
 
     beforeMount(){
+      this.loaded()
 
       if(this.$store.state.regUsers.userRegInEvent.length == 0){
         this.getRegUsers()
       }else{
         //console.log("else") dont load again
       }
+      this.showPreloader=true
 
     },
 
@@ -199,5 +210,21 @@
 .excel_icon{
     margin-left: 2px;
     margin-bottom: 2px;
+}
+.preload {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -42px 0 0 -12px;
+  background: #1976d2;
+  transform: rotate(45deg);
+  animation: spin 1s infinite linear;
+  z-index: 7000;
+}
+@keyframes spin {
+	0% { -webkit-transform:rotate(0deg); }
+	100% { -webkit-transform:rotate(360deg); }
 }
 </style>

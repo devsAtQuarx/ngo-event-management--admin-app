@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="textFields">
+
+      <v-layout row wrap justify-space-around >
+        <v-flex xs12 md10 lg10>
     <p class="grey--text text-xs-center" style="font-size:24px;font-weight:600">
       send push notification
     </p>
@@ -21,9 +23,12 @@
             v-model="notDet.link"
             label="On Click Link"
     ></v-text-field>
-</div>
-<v-layout row wrap justify-space-around class="text-xs-center selectEventButton">
-  <v-flex xs6 md4 lg4>
+  </v-flex>
+</v-layout>
+
+
+<v-layout row wrap justify-content-center class=" selectEventButton">
+  <v-flex xs12 md10 lg10>
     <v-btn
     outline
     flat
@@ -39,6 +44,7 @@
      <v-btn
       outline
       flat
+      
 
 
       @click="sendToPeopleInEvent(e.eventKey)"
@@ -312,13 +318,9 @@ import InfiniteLoading from 'vue-infinite-loading'
   }
 </script>
 <style>
-.textFields
-{position: fixed;
-width: 100%;
-z-index: 2;
-background: #f5f5f5;}
+
 .selectEventButton{
-  padding-top: 40vh;
+  padding-top: 10vh;
   z-index: 1;
 }
 </style>

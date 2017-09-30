@@ -50,7 +50,7 @@
               <v-icon>notifications</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-              <v-list-tile-title>Send Push Notification</v-list-tile-title>
+              <v-list-tile-title>Send Push Notification and Email</v-list-tile-title>
           </v-list-tile-content>
       </v-list-tile>
 
@@ -81,7 +81,7 @@
       <v-toolbar class="white grey--text" style="z-index:4" dark fixed>
          <v-toolbar-side-icon class="grey--text" @click.stop="vm.$store.state.auth.drawer = !vm.$store.state.auth.drawer"></v-toolbar-side-icon>
 
-         <v-toolbar-title>Toolbar</v-toolbar-title>
+         <v-toolbar-title>Umang Admin</v-toolbar-title>
        </v-toolbar>
 
       <main>

@@ -37,6 +37,19 @@
 
    </v-flex>
  </v-layout>
+ <v-snackbar
+ :timeout="timeout"
+ :top="y === 'top'"
+ :bottom="y === 'bottom'"
+ :right="x === 'right'"
+ :left="x === 'left'"
+ :multi-line="mode === 'multi-line'"
+ :vertical="mode === 'vertical'"
+ v-model="snackbar"
+>
+ {{ text }}
+ <v-btn flat class="white--text" @click.native="snackbar = false">Close</v-btn>
+</v-snackbar>
  <infinite-loading
    v-if="regUsers.length >= 3 && showLoader == true"
    :on-infinite="onInfinite"
@@ -57,7 +70,12 @@
 
     data(){
       return{
-
+        snackbar: false,
+      y: 'bottom',
+      x: null,
+      mode: '',
+      timeout: 3000,
+      text: ''
       }
     },
 
@@ -65,14 +83,21 @@
 
       goToSpecUserMemDetail(user){
         let vm = this
+        this.snackbar=true
         this.$store.state.db.db.ref('membershipDetail/' + user.uid)
           .once('value',function(memStatusSnap){
             if(memStatusSnap.val() == null ){
-              window.alert('not a mem')
+            //  window.alert('not a mem')
+              vm.text="The selected User is NOT a member"
+              this.loaded2()
             }else{
               vm.$router.push('/specUserMemDetail/' + user.uid)
             }
           })
+      },
+
+      loaded2 () {
+        setTimeout(() => (this.snackbar = false), 3000)
       },
 
       //showEvents

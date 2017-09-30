@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div class="textFields">
     <p class="grey--text text-xs-center" style="font-size:24px;font-weight:600">
       send push notification
     </p>
@@ -22,26 +22,32 @@
             label="On Click Link"
     ></v-text-field>
 </div>
-
-    <v-checkbox
+<v-layout row wrap justify-space-around class="text-xs-center selectEventButton">
+  <v-flex xs6 md4 lg4>
+    <v-btn
+    outline
+    flat
+    grey--text
     v-if="this.snackbar==false"
-     v-model="checkbox"
-    label="Send to All"
-     data-vv-name="checkbox"
+
      @click="sendToAll"
 
-   ></v-checkbox>
-
+   >Sent to all</v-btn>
+   <br>
+<div v-if="this.snackbar==false">
    <div v-for="e in this.pushNotEve" >
-     <v-checkbox
-      v-model="checkbox"
-     :label="e.eventTitle"
+     <v-btn
+      outline
+      flat
+
 
       @click="sendToPeopleInEvent(e.eventKey)"
 
-    ></v-checkbox>
+    >{{e.eventTitle}}</v-btn>
    </div>
-
+</div>
+</v-flex>
+</v-layout>
    <v-snackbar
    :timeout="timeout"
    :top="y === 'top'"
@@ -169,7 +175,7 @@ import InfiniteLoading from 'vue-infinite-loading'
         //console.log("loadMore")
         let vm = this
 
-        this.$store.state.events.pushNotEveCnt += 2
+        this.$store.state.events.pushNotEveCnt += 9
         //console.log(this.$store.state.events.count)
 
         if(vm.$store.state.events.pushNotEve[this.$store.state.events.pushNotEveCnt]
@@ -178,7 +184,7 @@ import InfiniteLoading from 'vue-infinite-loading'
           this.$store.state.db.db.ref('events/')
             .orderByKey()
             .endAt(vm.$store.state.events.pushNotEve[this.$store.state.events.pushNotEveCnt].eventKey)
-            .limitToLast(3)
+            .limitToLast(10)
             .once('value',function(snapshot){
               //console.log(snapshot.val())
 
@@ -228,7 +234,7 @@ import InfiniteLoading from 'vue-infinite-loading'
 
       getEvents(){
         let vm = this
-        this.$store.state.db.db.ref('events/').limitToLast(3)
+        this.$store.state.db.db.ref('events/').limitToLast(10)
           .once('value',function(eventSnap){
           vm.showOnDom(eventSnap.val())
         })
@@ -305,3 +311,14 @@ import InfiniteLoading from 'vue-infinite-loading'
 
   }
 </script>
+<style>
+.textFields
+{position: fixed;
+width: 100%;
+z-index: 2;
+background: #f5f5f5;}
+.selectEventButton{
+  padding-top: 40vh;
+  z-index: 1;
+}
+</style>

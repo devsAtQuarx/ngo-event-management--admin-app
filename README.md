@@ -14,7 +14,7 @@ npm run dev
 # build for production with minification
 npm run build
 
-# serve to localhost after build for production
+# serve to localhost after built for production
 firebase serve
 
 # build for production and view the bundle analyzer report
